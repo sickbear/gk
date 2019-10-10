@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block toplinks %}
+    <link rel="stylesheet" href="{% static 'scripts/fancybox/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+
+{% block main %}
+    <main class="inner-main">
+		{% block top-container %}{{ block.super }}{% endblock %}
+
+		<div class="top-panel">
+			<div class="container">
+				<div class="breadcrumbs">
+					<ul class="breadcrumbs__list">
+						<li class="breadcrumbs__item">
+                            <a href="{% url 'gk_homepage' %}" class="breadcrumbs__link">Главная</a>
+                        </li>
+						<li class="breadcrumbs__item"><a class="breadcrumbs__link">Форум</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-greed">
+			<div class="container">
+				<div class="main-greed__left-column mrg-right">
+					<div class="forum-search">
+                        {% include "forum/includes/search_panel.html" %}
+					</div>
+
+					<div class="forum-topic">
+						<div class="forum-topic__left">
+							{% include 'forum/includes/last_reads.html' %}
+						</div>
+						<div class="forum-topic__right">
+                            {% include 'forum/includes/last_articles.html' %}
+						</div>
+					</div>
+
+					<div class="forum">
+						<table class="forum__table forum-table">
+							<thead>
+								<tr>
+									<th class="forum-table__category">Категория</th>
+									<th class="forum-table__charter">Разделы</th>
+									<th class="forum-table__theme">Темы</th>
+									<th class="forum-table__update">Последнее обновление</th>
+								</tr>
+							</thead>
+							<tbody>
+                                {% for category in categories %}
+                                    <tr>
+                                        <td class="forum-table__category-td">
+                                            <h3><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></h3>
+                                            <span>{{ category.description }}</span>
+                                        </td>
+                                        <td class="forum-table__charter-td">
+                                            <a href="{{ category.get_absolute_url }}">{{ category.sections_count }}</a>
+                                        </td>
+                                        <td class="forum-table__theme-td">{{ category.threads_count }}</td>
+                                        <td class="forum-table__update-td">
+                                            <b>Обновление: </b>
+                                            <time datetime="{{ category.last_updated|date:'Y-m-d' }}">
+                                                {{ category.last_updated|date:"d.m.Y" }}
+                                            </time>
+                                            <time class="forum-table__time">
+                                                {{ category.last_updated|date:"H:i" }}
+                                            </time>
+                                        </td>
+                                    </tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="main-greed__right-column">
+					<div class="bunner-side fixed-block">
+						<a href="#" class="bunner-side__link">
+							<img src="{% static 'img/banner10.jpg' %}" alt="Реклама на сайте">
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<div class="banner">
+				<div class="container">
+					<a href="#" class="banner__link">
+						<picture>
+							<source media="(max-width: 767px)" srcset="http://placehold.it/320x120">
+							<source media="(max-width: 1024px)" srcset="http://placehold.it/728x100">
+							<img src="{% static 'img/banner3.jpg' %}" alt="Реклама">
+						</picture>
+					</a>
+				</div>
+			</div>
+
+		</div>
+	</main>
+{% endblock %}
+
+{% block bottomlinks %}
+    <script src="{% static 'scripts/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'scripts/headhesive/headhesive.min.js' %}"></script>
+    <script src="{% static 'scripts/fancybox/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'scripts/main-header.js' %}"></script>
+    <script src="{% static 'scripts/script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block toplinks %}
+    <link rel="stylesheet" href="{% static 'scripts/fancybox/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'scripts/emoji/dist/emojionearea.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+
+{% block main %}
+    <main class="inner-main">
+		{% block top-container %}{{ block.super }}{% endblock %}
+
+		<div class="top-panel">
+			<div class="container">
+				<div class="breadcrumbs">
+					<ul class="breadcrumbs__list">
+						<li class="breadcrumbs__item">
+                            <a href="{% url 'gk_homepage' %}" class="breadcrumbs__link">Главная</a>
+                        </li>
+						<li class="breadcrumbs__item">
+                            <a href="{% url 'forum_categories' %}" class="breadcrumbs__link">Форум</a>
+                        </li>
+						<li class="breadcrumbs__item">
+                            <a class="breadcrumbs__link">Создать тему</a>
+                        </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-greed">
+			<div class="container">
+				<div class="main-greed__left-column main-greed__left-column--form mrg-right">
+					<div class="add-news">
+						<form class="form form--forum" action="#">
+							<section class="form__wrapper">
+								<h1 class="title mrg-vertical">Создать тему</h1>
+								<div class="form__for-flex">
+									<div class="form__left-column">
+										<div>
+											<label class="progect-label" for="category">Категория<sup>*</sup></label>
+											<input class="progect-input" type="text" id="category" required="">
+										</div>
+
+										<div>
+											<label class="progect-label" for="avtor">Название<sup>*</sup></label>
+											<input class="progect-input" type="text" id="avtor" required="">
+										</div>
+
+										<div>
+											<label class="progect-label">Сообщение<sup>*</sup></label>
+											<textarea class="progect-textarea progect-textarea--message" required=""></textarea>
+										</div>
+
+									</div>
+									<div class="form__right-column form__right-column--flex">
+										<div class="file-wrapper file-wrapper--forum">
+											<input class="file-input" type="file" data-photo="three" id="photo" name="fileMulti[]" multiple="">
+											<label class="progect-label file-label" for="photo"><span class="file-image"></span>Загрузите фото</label>
+											<div class="photos"></div>
+										</div>
+										<button class="button button--dark profile-form--dark" type="submit">Отправить</button>
+									</div>
+								</div>
+							</section>
+						</form>
+					</div>
+				</div>
+
+				<div class="main-greed__right-column">
+					<div class="bunner-side fixed-block">
+						<a href="#" class="bunner-side__link">
+							<img src="{% static 'img/banner10.jpg' %}" alt="Реклама на сайте">
+						</a>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</main>
+{% endblock %}
+
+{% block bottomlinks %}
+    <script src="{% static 'scripts/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'scripts/headhesive/headhesive.min.js' %}"></script>
+    <script src="{% static 'scripts/fancybox/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'scripts/main-header.js' %}"></script>
+    <script src="{% static 'scripts/upload.js' %}"></script>
+    <script src="{% static 'scripts/script.js' %}"></script>
+{% endblock %}

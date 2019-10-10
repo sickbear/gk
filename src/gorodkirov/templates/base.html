@@ -1,0 +1,332 @@
+<!DOCTYPE html>{% spaceless %}
+{% load static %}
+{% load thumbnail %}
+{# load articles_tags #}
+{# load userinfo_tags #}
+
+<html lang="ru">{% endspaceless %}
+
+<head>
+	<meta charset="UTF-8">
+	<title>Портал город Киров</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<meta name="format-detection" content="telephone=no">
+
+	{% block toplinks %}
+		<link rel="stylesheet" href="{% static 'scripts/slick/slick.min.css' %}">
+		<link rel="stylesheet" href="{% static 'scripts/slick/slick-theme.css' %}">
+		<link rel="stylesheet" href="{% static 'scripts/fancybox/jquery.fancybox.min.css' %}">
+		<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+	{% endblock %}
+
+</head>
+
+<body>
+	{% include 'includes/svg_icon.html' %}
+
+	<h1 class="visually-hidden">Новостной портал "Город Киров"</h1>
+
+	{# Верхний банер #}
+	<div class="banner-wide" style="background-color: #ccc">
+		<a href="#" class="banner-wide__link">
+			<picture>
+				<source media="(max-width: 767px)" srcset="{% static 'img/banner1mob.png' %}">
+				<source media="(max-width: 1024px)" srcset="{% static 'img/banner1tab.png' %}">
+				<img src="http://placehold.it/1920x150" alt="Рекламный банер">
+			</picture>
+		</a>
+    </div>
+
+
+	<header class="main-header">
+		<div class="container">
+		    <div class="main-header__left">
+				<button class="button button--burger" type="button">
+					<span class="visually-hidden">Навигация сайта</span>
+				</button>
+				<div class="logo">
+				    <a class="logo__link" href="/">
+						<img class="logo__image"
+							 src="{% static 'img/logo.png' %}"
+							 width="200"
+							 alt="Логотип сайта город Киров">
+				    </a>
+				</div>
+		    </div>
+		    <div class="widjets">
+				<div class="weather">
+				    <b class="weather__text">26 августа, Киров</b>
+				    <span class="weather__degr">+ 23°</span>
+				</div>
+				<div class="currency">
+				    <span class="currency__text">Курс ЦБ</span>
+				    <span class="currency__dollar">63,45</span>
+				    <span class="currency__euro">73,47</span>
+				</div>
+				<div class="road">
+				    <span class="road__text">Средняя <br> загруженность</span>
+				</div>
+		    </div>
+		    <div class="main-header__right">
+
+				{% if user.is_authenticated %}
+					<div class="user">
+						<a href="{# url 'show_profile' #}" class="user__link">
+							<div class="user__img-wrapper">
+								{% if user.user.avatar %}
+									<img src="{% thumbnail user.user.avatar 32x32 crop %}" alt="">
+								{% endif %}
+							</div>
+							{% if user.first_name or user.last_name %}
+								<p class="user__name">{{ user.first_name }} {{ user.last_name }}</p>
+							{% else %}
+								<p class="user__name">{{ user.username }}</p>
+							{% endif %}
+						</a>
+
+						<style>
+							.user {position:relative;}
+							.logout {position:absolute;right: 0;display:none}
+						</style>
+						<script>
+							document.addEventListener('DOMContentLoaded', function (){
+								$('.user').hover(function() {
+									$('.logout').css('display', 'block');
+								}, function() {
+									$('.logout').css('display', 'none');
+								});
+							});
+						</script>
+						<a class="logout" href="{% url 'logout' %}?next=/">выход</a>
+
+					</div>
+				{% else %}
+					<div class="enter">
+						<a href="#" data-fancybox="" data-src="#modal-enter" class="enter__link" data-btn="enter">
+							Вход
+						</a>
+						<a href="#" data-fancybox="" data-src="#modal-enter" class="enter__link" data-btn="registr">
+							Регистрация
+						</a>
+					</div>
+				{% endif %}
+
+			    <div class="search">
+			  	    <a href="#" data-fancybox="" data-src="#modal-search" class="search__link">
+						<span class="visually-hidden">Поиск по сайту</span>
+					</a>
+			    </div>
+		    </div>
+		</div>
+    </header>
+
+	{% block main %}
+		{% block top-container %}
+			<div class="top-container">
+				<div class="container">
+					<div class="actual-rubrics">
+						<ul class="actual-rubrics__list">
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Выборы 2018</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Новостройки</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">ЖКХ</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Дешевые авиабилеты</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Общество</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Политика</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Происшествия</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Спорт</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Семья</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Политика</a></li>
+							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Семья</a></li>
+						</ul>
+					</div>
+					<div class="top-container__social social">
+						<h3 class="visually-hidden">Мы в социальных сетях</h3>
+						<ul class="social__list">
+							<li class="social__item">
+								<a href="//vk.com/thekirov/" class="social__link social__link--vk">
+									<span class="visually-hidden">Вконтакте</span>
+								</a>
+							</li>
+							<li class="social__item">
+								<a href="//www.facebook.com/GorodKirovRU/" class="social__link social__link--fb">
+									<span class="visually-hidden">Фейсбук</span>
+								</a>
+							</li>
+							<li class="social__item">
+								<a href="//ok.ru/gorodkirov/" class="social__link social__link--odnk">
+									<span class="visually-hidden">Одноклассники</span>
+								</a>
+							</li>
+							<li class="social__item">
+								<a href="#" class="social__link social__link--inst">
+									<span class="visually-hidden">Инстаграм</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		{% endblock %}
+	{% endblock %}
+
+	<footer class="main-footer">
+		<div class="container">
+		    <div class="main-footer__flex-wrapper">
+				<div class="main-footer__left">
+				    <div class="logo">
+						<a class="logo__link" href="/">
+						    <img class="logo__image" src="{% static 'img/logo.png' %}" width="200" alt="Логотип сайта город Киров">
+						</a>
+				    </div>
+				</div>
+				<div class="main-footer__center">
+				    <div class="main-footer__copyright">
+						<p>Сетевое издание "WWW.GORODKIROV.RU". Учредитель: ООО «Фогран». Главный редактор:
+							Черных Юлия Эдуардовна. Адрес редакции: 610000, Кировская область,
+							г. Киров, ул.Молодой Гвардии, д.82. Эл.почта: reklama@gorodkirov.ru,
+							тел: +7(905)870-62-55, 54-16-05. Свидетельство о регистрации ЭЛ № ФС77-60902
+							от 02 марта 2015, выдано Федеральной службой по надзору в сфере связи, информационных
+							технологий и массовых коммуникаций. Полное или частичное цитирование материалов сайта,
+							возможно только с гиперссылкой на источник. Мнение редакции может не совпадать с мнениями,
+							высказанными в интервью, комментариях пользователей или прямой речи персонажей публикаций.
+							Редакция не несёт ответственности за текст комментариев читателей.</p>
+						<p class="green">Политика обработки персональных данных и соглашение об обработке
+							персональных данных. | Спец. оценка по условиям труда</p>
+				    </div>
+				</div>
+				<div class="main-footer__right">
+				    <div class="social">
+						<h3 class="visually-hidden">Мы в социальных сетях</h3>
+						<ul class="social__list">
+							<li class="social__item">
+								<a href="//vk.com/thekirov/" class="social__link social__link--vk">
+									<span class="visually-hidden">Вконтакте</span>
+								</a>
+							</li>
+							<li class="social__item">
+								<a href="//www.facebook.com/GorodKirovRU/" class="social__link social__link--fb">
+									<span class="visually-hidden">Фейсбук</span>
+								</a>
+							</li>
+							<li class="social__item">
+								<a href="//ok.ru/gorodkirov/" class="social__link social__link--odnk">
+									<span class="visually-hidden">Одноклассники</span>
+								</a>
+							</li>
+							<li class="social__item">
+								<a href="#" class="social__link social__link--inst">
+									<span class="visually-hidden">Инстаграм</span>
+								</a>
+							</li>
+						</ul>
+				    </div>
+				    <div class="main-footer__age">16+</div>
+				</div>
+		    </div>
+
+		    <div class="main-footer__metric">
+				<div>Здесь будут счетчики</div>
+				<div class="main-footer__age">16+</div>
+		    </div>
+		</div>
+    </footer>
+
+	<div class="search-block">
+		{% include 'modals/search.html' %}
+    </div>
+
+	<div class="background">
+		<div class="burger-panel">
+			<button class="button button--dark-close"><span class="visually-hidden">Закрыть меню</span></button>
+			<div class="burger-panel__wrapper-top">
+			    <div class="logo">
+					<a class="logo__link" href="/">
+					    <img class="logo__image" src="{% static 'img/logo.png' %}" width="240" alt="Логотип сайта город Киров">
+					</a>
+			    </div>
+			    <nav class="burger-panel__nav">
+					<ul class="burger-panel__list">
+					    <li class="burger-panel__item">
+							<a href="//auto43.ru/" class="burger-panel__link burger-panel__link--grey">
+							    <svg width="14" height="14">
+									<use xlink:href="#avto"></use>
+							    </svg>
+							    Авто
+							</a>
+					    </li>
+					    <li class="burger-panel__item">
+							<a href="//dom43.ru/" class="burger-panel__link burger-panel__link--grey">
+							    <svg width="14" height="14">
+									<use xlink:href="#house"></use>
+							    </svg>
+							    Дом
+							</a>
+					    </li>
+					    <li class="burger-panel__item">
+							<a href="//afisha.gorodkirov.ru/" class="burger-panel__link burger-panel__link--grey">
+							    <svg width="14" height="14">
+									<use xlink:href="#movie"></use>
+							    </svg>
+							    Афиша
+							</a>
+					    </li>
+					    <li class="burger-panel__item  burger-panel__item--gap">
+							<a href="//www.job43.ru/" class="burger-panel__link burger-panel__link--grey">
+							    <svg width="14" height="14">
+									<use xlink:href="#work"></use>
+							    </svg>
+							    Работа
+							</a>
+					    </li>
+					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Новости</a></li>
+					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Интервью</a></li>
+					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Репортаж</a></li>
+					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Срочные новости</a></li>
+					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Хроника событий</a></li>
+					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Спецпроекты</a></li>
+					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Форум</a></li>
+					</ul>
+			    </nav>
+			</div>
+			<div class="burger-panel__wrapper-bottom">
+			    <a href="#" class="button button--dark">Предложить новость</a>
+			    <a href="#" class="button button--inner">Разместить рекламу</a>
+			</div>
+	    </div>
+	</div>
+
+	{% include 'modals/auth.html' %}
+
+	<div class="banner-wide banner-wide--fixed" style="background-color: #000">
+		<div class="container">
+		    <button class="button--banner"><span class="visually-hidden">Cкрыть банер</span></button>
+		    <button class="button--fixbanner-close"><span class="visually-hidden">Закрыть банер</span></button>
+		</div>
+		<a href="#" class="banner-wide__link">
+		    <picture>
+				<source media="(max-width: 767px)" srcset="{% static 'img/banner9mob.png' %}">
+				<source media="(max-width: 992px)" srcset="{% static 'img/banner9tab.png' %}">
+				<img src="{% static 'img/banner9.jpg' %}" alt="Рекламный банер">
+		    </picture>
+		</a>
+    </div>
+
+	<div class="push-bunner" id="float-banner">
+		<a class="push-bunner__link" href="#">
+			<img class="push-bunner__image" src="{% static 'img/banner-push.png' %}" alt="Реклама на сайте">
+		</a>
+	</div>
+
+	{% block bottomlinks %}
+		<script src="https://www.google.com/recaptcha/api.js" async></script>
+
+		<script src="{% static 'scripts/jquery-3.3.1.min.js' %}"></script>
+		<script src="{% static 'scripts/slick/slick.min.js' %}"></script>
+		<script src="{% static 'scripts/headhesive/headhesive.min.js' %}"></script>
+		<script src="{% static 'scripts/fancybox/jquery.fancybox.min.js' %}"></script>
+		<script src="{% static 'scripts/main-header.js' %}"></script>
+		<script src="{% static 'scripts/script.js' %}"></script>
+	{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% load gk_tags %}
+
+<section class="news-feed">
+    {% get_now as current_news %}
+    {% now 'd-m-y' as today %}
+    {% for article in current_news|slice:":6" %}
+        <article class="news-feed__item">
+            <time class="news-feed__time"
+                  datetime="{{ article.date_created|date:'d-m-y H:i' }}">
+                {% if today == article.date_created|date:'d-m-y' %}
+                    Сегодня, {{ article.date_created|date:'H:i' }}
+                {% else %}
+                    {{ article.date_created|date:'d.m.y, H:i' }}
+                {% endif %}
+            </time>
+            <header class="news-feed__header">
+                <a href="{% url 'content_show_article' article.slug %}" class="link">
+                    <h2 class="news-feed__title news-feed__title--bold">{{ article.title }}</h2>
+                </a>
+            </header>
+        </article>
+    {% endfor %}
+    <a href="{% url 'news' %}" class="news-feed__more">Все новости лентой ></a>
+</section>

@@ -1,0 +1,408 @@
+{% load static %}
+{% load thumbnail %}
+{% now 'd-m-y' as today %}
+
+<section class="news">
+    <div class="container">
+        <div class="news__flex-row">
+
+            <div class="half-card">
+
+                <article class="half-line-news">
+                    <a href="{% url 'content_show_article' news.0.slug %}" class="half-line-news__link">
+                        <div class="half-line-news__image"
+                             style="background-image: url({% thumbnail news.0.teaser2 131x131 crop %});"></div>
+                        <div class="half-line-news__wrapper">
+                            <header class="half-line-news_header">
+                                <h2 class="half-line-news__title">{{ news.0.title }}</h2>
+                            </header>
+                            <p class="half-line-news__text">{{ news.0.text|striptags|cut:"&nbsp;"|slice:"60" }}</p>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                                    <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
+                    <a class="tag" href="/content/rubric/{{ news.0.rubric.slug }}">{{ news.0.rubric }}</a>
+                    <div class="hashteg">
+                        {% for tag in news.0.tags.all %}
+                            <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </article>
+
+                <article class="half-line-news">
+                    <a href="{% url 'content_show_article' news.1.slug %}" class="half-line-news__link">
+                        <div class="half-line-news__image"
+                             style="background-image: url({% thumbnail news.1.teaser2 131x131 crop %});">
+                        </div>
+                        <div class="half-line-news__wrapper">
+                            <header class="half-line-news_header">
+                                <h2 class="half-line-news__title">{{ news.1.title }}</h2>
+                            </header>
+                            <p class="half-line-news__text">{{ news.1.text|striptags|cut:"&nbsp;"|slice:"60" }}</p>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                                    <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="##" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
+                    <a class="tag" href="/content/rubric/{{ news.1.rubric.slug }}">{{ news.1.rubric }}</a>
+                    <div class="hashteg">
+                        {% for tag in news.1.tags.all %}
+                            <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="third-card-slider visually-hide">
+
+                <article class="third-card third-card-news-bg">
+                    <a href="{% url 'content_show_article' news.2.slug %}"
+                       class="third-card-news-bg__link"
+                       style="background-image: url({% thumbnail news.2.teaser2 293x380 crop %});">
+                        <div class="third-card-news-bg__wrapper">
+                            <header class="third-card-news-bg__header">
+                                <h2 class="third-card-news-bg__title">{{ news.2.title }}</h2>
+                            </header>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time">Час назад</b>
+                                    <b class="stamp__item stamp__item--views">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
+                    <a class="tag  tag--white" href="/content/rubric/{{ news.2.rubric.slug }}">{{ news.2.rubric }}</a>
+                    <div class="hashteg">
+                        {% for tag in news.2.tags.all %}
+                            <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </article>
+
+                <article class="third-card third-card-news-bg">
+                    <a href="{% url 'content_show_article' news.3.slug %}"
+                       class="third-card-news-bg__link"
+                       style="background-image: url({% thumbnail news.3.teaser2 293x380 crop %});">
+                        <div class="third-card-news-bg__wrapper">
+                            <header class="third-card-news-bg__header">
+                                <h2 class="third-card-news-bg__title">{{ news.3.title }}</h2>
+                            </header>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time">Час назад</b>
+                                    <b class="stamp__item stamp__item--views">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 15 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
+                    <a class="tag  tag--white" href="/content/rubric/{{ news.3.rubric.slug }}">{{ news.3.rubric }}</a>
+                    <div class="hashteg">
+                        {% for tag in news.3.tags.all %}
+                            <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </article>
+
+                <article class="third-card third-card-news-bg">
+                    <a href="{% url 'content_show_article' news.4.slug %}"
+                       class="third-card-news-bg__link"
+                       style="background-image: url({% thumbnail news.4.teaser2 293x380 crop %});">
+                        <div class="third-card-news-bg__wrapper">
+                            <header class="third-card-news-bg__header">
+                                <h2 class="third-card-news-bg__title">{{ news.4.title }}</h2>
+                            </header>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time">Час назад</b>
+                                    <b class="stamp__item stamp__item--views">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
+                    <a class="tag  tag--white" href="/content/rubric/{{ news.4.rubric.slug }}">{{ news.4.rubric }}</a>
+                    <div class="hashteg">
+                        {% for tag in news.4.tags.all %}
+                            <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </article>
+            </div>
+
+            <article class="third-card third-card-news">
+                <a href="{% url 'content_show_article' news.5.slug %}" class="third-card-news__link">
+                    <div class="flex-wrapper">
+                        <div class="third-card-news__img"
+                             style="background-image: url({% thumbnail news.5.teaser2 293x195 crop %});">
+                        </div>
+                        <div class="third-card-news__wrapper">
+                            <header class="third-card-news__header">
+                                <h2 class="third-card-news__title">{{ news.5.title }}</h2>
+                            </header>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                                    <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
+                <a class="tag" href="/content/rubric/{{ news.5.rubric.slug }}">{{ news.5.rubric }}</a>
+                <div class="hashteg">
+                    {% for tag in news.5.tags.all %}
+                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="half-card half-card-news">
+                <a class="half-card-news__link"
+                   href="{% url 'content_show_article' news.6.slug %}"
+                   style="background-image: url({% thumbnail news.6.teaser2 602x380 crop %});">
+                    <div class="half-card-news__wrapper">
+                        <header class="half-card-news__header">
+                            <h2 class="half-card-news__title">{{ news.6.title }}</h2>
+                        </header>
+                        <div class="stamp">
+                            <div class="stamp__left">
+                                <b class="stamp__item stamp__item--time">Час назад</b>
+                                <b class="stamp__item stamp__item--views">256</b>
+                                <b class="stamp__item stamp__item--comments">256</b>
+                            </div>
+                            <div class="stamp__right">
+                                <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
+                <a class="tag tag--white" href="/content/rubric/{{ news.6.rubric.slug }}">{{ news.6.rubric }}</a>
+                <div class="hashteg">
+                    {% for tag in news.6.tags.all %}
+                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <div class="half-card">
+
+                <article class="half-line-news">
+                    <a href="{% url 'content_show_article' news.7.slug %}" class="half-line-news__link">
+                        <div class="half-line-news__image"
+                             style="background-image: url({% thumbnail news.7.teaser2 131x131 crop %});">
+                        </div>
+                        <div class="half-line-news__wrapper">
+                            <header class="half-line-news_header">
+                                <h2 class="half-line-news__title">{{ news.7.title }}</h2>
+                            </header>
+                            <p class="half-line-news__text">{{ news.7.text|striptags|cut:"&nbsp;"|slice:"60" }}</p>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                                    <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
+                    <a class="tag" href="/content/rubric/{{ news.7.rubric.slug }}">{{ news.7.rubric }}</a>
+                    <div class="hashteg">
+                        {% for tag in news.7.tags.all %}
+                            <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </article>
+
+                <article class="half-line-news">
+                    <a href="{% url 'content_show_article' news.8.slug %}" class="half-line-news__link">
+                        <div class="half-line-news__image"
+                             style="background-image: url({% thumbnail news.8.teaser2 131x131 crop %});">
+                        </div>
+                        <div class="half-line-news__wrapper">
+                            <header class="half-line-news_header">
+                                <h2 class="half-line-news__title">{{ news.8.title }}</h2>
+                            </header>
+                            <p class="half-line-news__text">{{ news.8.text|striptags|cut:"&nbsp;"|slice:"60" }}</p>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                                    <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
+                    <a class="tag" href="/content/rubric/{{ news.8.rubric.slug }}">{{ news.8.rubric }}</a>
+                    <div class="hashteg">
+                        {% for tag in news.8.tags.all %}
+                            <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                </article>
+            </div>
+
+            <article class="third-card third-card-news">
+                <a href="{% url 'content_show_article' news.9.slug %}" class="third-card-news__link">
+                    <div class="flex-wrapper">
+                        <div class="third-card-news__img"
+                             style="background-image: url({% thumbnail news.9.teaser2 293x195 crop %});">
+                        </div>
+                        <div class="third-card-news__wrapper">
+                            <header class="third-card-news__header">
+                                <h2 class="third-card-news__title">{{ news.9.title }}</h2>
+                            </header>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                                    <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
+                <a class="tag" href="/content/rubric/{{ news.9.rubric.slug }}">{{ news.9.rubric }}</a>
+                <div class="hashteg">
+                    {% for tag in news.9.tags.all %}
+                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="third-card third-card-news">
+                <a href="{% url 'content_show_article' news.10.slug %}" class="third-card-news__link">
+                    <div class="flex-wrapper">
+                        <div class="third-card-news__img"
+                             style="background-image: url({% thumbnail news.10.teaser2 293x195 crop %});">
+                        </div>
+                        <div class="third-card-news__wrapper">
+                            <header class="third-card-news__header">
+                                <h2 class="third-card-news__title">{{ news.10.title }}</h2>
+                            </header>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                                    <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
+                <a class="tag" href="/content/rubric/{{ news.10.rubric.slug }}">{{ news.10.rubric }}</a>
+                <div class="hashteg">
+                    {% for tag in news.10.tags.all %}
+                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="third-card third-card-news">
+                <a href="{% url 'content_show_article' news.11.slug %}" class="third-card-news__link">
+                    <div class="flex-wrapper">
+                        <div class="third-card-news__img"
+                             style="background-image: url({% thumbnail news.11.teaser2 293x195 crop %});">
+                        </div>
+                        <div class="third-card-news__wrapper">
+                            <header class="third-card-news__header">
+                                <h2 class="third-card-news__title">{{ news.11.title }}</h2>
+                            </header>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                                    <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
+                <a class="tag" href="/content/rubric/{{ news.11.rubric.slug }}">{{ news.11.rubric }}</a>
+                <div class="hashteg">
+                    {% for tag in news.11.tags.all %}
+                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </article>
+
+            <article class="third-card third-card-news">
+                <a href="{% url 'content_show_article' news.12.slug %}" class="third-card-news__link">
+                    <div class="flex-wrapper">
+                        <div class="third-card-news__img"
+                             style="background-image: url({% thumbnail news.12.teaser2 293x195 crop %});">
+                        </div>
+                        <div class="third-card-news__wrapper">
+                            <header class="third-card-news__header">
+                                <h2 class="third-card-news__title">{{ news.12.title }}</h2>
+                            </header>
+                            <div class="stamp">
+                                <div class="stamp__left">
+                                    <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                                    <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
+                                </div>
+                                <div class="stamp__right">
+                                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
+                <a class="tag" href="/content/rubric/{{ news.12.rubric.slug }}">{{ news.12.rubric }}</a>
+                <div class="hashteg">
+                    {% for tag in news.12.tags.all %}
+                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </article>
+
+        </div>
+    </div>
+</section>

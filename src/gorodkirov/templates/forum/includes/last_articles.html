@@ -1,0 +1,13 @@
+{% load forum_tags %}
+{% get_last_articles count=6 as last_messages %}
+
+<h2 class="forum-topic__title">Комментарии к статьям</h2>
+<ul class="forum-topic__list">
+    {% for thread in last_messages %}
+        <li class="forum-topic__item">
+            <a href="{{ thread.get_absolute_url }}" class="forum-topic__link">
+                {{ thread.name }} <span>({{ thread.posts_count }})</span>
+            </a>
+        </li>
+    {% endfor %}
+</ul>

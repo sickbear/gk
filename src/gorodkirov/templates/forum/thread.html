@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block toplinks %}
+    <link rel="stylesheet" href="{% static 'scripts/fancybox/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'scripts/emoji/dist/emojionearea.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+
+{% block main %}
+    <main class="inner-main">
+		{% block top-container %}{{ block.super }}{% endblock %}
+
+		<div class="top-panel">
+			<div class="container">
+				<div class="breadcrumbs">
+					<ul class="breadcrumbs__list">
+						<li class="breadcrumbs__item">
+                            <a href="{% url 'gk_homepage' %}" class="breadcrumbs__link">Главная</a>
+                        </li>
+						<li class="breadcrumbs__item">
+                            <a href="{% url 'forum_categories' %}" class="breadcrumbs__link">Форум</a>
+                        </li>
+						<li class="breadcrumbs__item">
+                            <a class="breadcrumbs__link">{{ thread.section.category.name }}</a>
+                        </li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-greed">
+			<div class="container">
+				<div class="main-greed__left-column mrg-right">
+					<div class="forum-search">
+						<h1 class="title--red mrg-vertical">Форум</h1>
+						<form action="#">
+							<div class="forum-search__wrapper">
+								<div class="forum-search__left">
+									<input type="search" class="forum-search__input" placeholder="Поиск по форуму">
+									<button class="forum-search__button"><span class="visually-hidden">Найти</span></button>
+								</div>
+								<div class="forum-search__right">
+									<a href="forum5.html" class="button button--dark">+ Создать тему</a>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<div class="forum">
+						<div class="breadcrumbs breadcrumbs--forum">
+							<ul class="breadcrumbs__list">
+								<li class="breadcrumbs__item">
+                                    <a href="{% url 'forum_sections' category_id=category_id %}"
+                                       class="breadcrumbs__link breadcrumbs__link--forum">
+                                        {{ thread.section.category.name }}
+                                    </a>
+                                </li>
+								<li class="breadcrumbs__item">
+                                    <a href="{% url 'forum_threads' category_id=category_id section_id=section_id %}"
+                                       class="breadcrumbs__link breadcrumbs__link--forum">
+                                        {{ thread.section.name }}
+                                    </a>
+                                </li>
+								<li class="breadcrumbs__item">
+                                    <a class="breadcrumbs__link breadcrumbs__link--forum">{{ thread.name }}</a>
+                                </li>
+							</ul>
+						</div>
+
+						<section class="comments">
+                            {# Автор #}
+							<article class="comment comment--main">
+								<h3 class="visually-hidden">Комментарий</h3>
+								<div class="comment__wrapper">
+									<div class="comment__image-wrapper">
+                                        {% with thread.user.user.avatar as avatar %}
+                                            {% if avatar %}
+										        <img src="{% thumbnail avatar 53x53 crop %}" alt="">
+                                            {% else %}
+                                                <img src="{% static 'img/default_avatar_middle.jpg' %}" alt="">
+                                            {% endif %}
+                                        {% endwith %}
+									</div>
+									<div class="comment__inner-wrapper">
+										<b class="comment__username">{{ thread.author_name }}</b>
+										<time class="comment__date" datetime="{{ thread.date_created|date:'Y-m-d' }}">
+                                            {{ thread.date_created|date:"d.m.Y H:i" }}
+                                        </time>
+									</div>
+								</div>
+								<div class="comment__text">
+                                    {{ thread.text|striptags|linebreaksbr }}
+								</div>
+								<div>
+									{% for image in thread.images %}
+										<a href="{{ image.url }}" class="fancyimages" rel="galer">
+											<img src="{{ image.url }}" width="80" height="80" alt="">
+										</a>
+									{% endfor %}
+								</div>
+							</article>
+
+                            {# Ответы #}
+							<h2 class="comments__title">Комментарии:</h2>
+
+							{% for post in posts %}
+								<article class="comment" id="post-{{ post.id }}">
+									<h3 class="visually-hidden">Комментарий</h3>
+									<div class="comment__wrapper">
+										<div class="comment__image-wrapper">
+											{% with post.user.user.avatar as avatar %}
+												{% if avatar %}
+													<img src="{% thumbnail avatar 53x53 crop %}" alt="">
+												{% else %}
+													<img src="{% static 'img/default_avatar_middle.jpg' %}" alt="">
+												{% endif %}
+											{% endwith %}
+										</div>
+										<div class="comment__inner-wrapper">
+											{% if post.user.is_anonymous or post.author_name == "Anonymous user" %}
+												<b class="comment__username">Anonymous user</b>
+											{% else %}
+												<b class="comment__username">{{ post.author_name }}</b>
+											{% endif %}
+											<time class="comment__date" datetime="{{ post.date_created|date:'Y-m-d' }}">
+												{{ post.date_created|date:"d.m.Y H:i" }}
+											</time>
+										</div>
+									</div>
+									<div class="comment__text">
+										<p>{{ post.text|striptags|linebreaksbr }}</p>
+										{% for image in post.images %}
+											<a target="_blank" href="{{ image.url }}" class="fancyimages" rel="galer">
+												<img src="{% thumbnail image 80x80 crop %}" width="80" height="80" />
+											</a>
+										{% endfor %}
+									</div>
+									<time class="comment__date comment__date--mobile-only"
+										  datetime="{{ post.date_created|date:'Y-m-d' }}">
+										{{ post.date_created|date:"d.m.Y H:i" }}
+									</time>
+									<div class="comment__inner-wrapper-bottom">
+										<a href="#" class="comment__link comment__link--answer">Ответить</a>
+										<a href="#" class="comment__link">Цитировать</a>
+										<a href="#" data-fancybox="" data-src="#modal-complaint" class="comment__link">
+											Пожаловаться
+										</a>
+									</div>
+								</article>
+							{% endfor %}
+
+<!--							<article class="comment comment&#45;&#45;to">-->
+<!--								<h3 class="visually-hidden">Комментарий</h3>-->
+<!--								<div class="comment__wrapper">-->
+<!--									<div class="comment__image-wrapper">-->
+<!--										<img src="{% static 'img/user-2.jpg' %}" alt="Аватар пользователя">-->
+<!--									</div>-->
+<!--									<div class="comment__inner-wrapper">-->
+<!--										<b class="comment__username">Светлана Перминова</b>-->
+<!--										<b class="comment__username comment__username&#45;&#45;to">Валентина Иванова</b>-->
+<!--										<time class="comment__date" datetime="18:12">Сегодня 18:12</time>-->
+<!--									</div>-->
+<!--								</div>-->
+<!--								<div class="comment__text">-->
+<!--									<p>Ну из этой статьи следует ,что она не такой уж народный кандидат, а просто проект. Надеюсь ее бодрое начало будет иметь такое же продолжение. Хотя вот уже в Едро вступила..</p>-->
+<!--								</div>-->
+<!--								<time class="comment__date comment__date&#45;&#45;mobile-only" datetime="18:12">Сегодня 18:12</time>-->
+<!--								<div class="comment__inner-wrapper-bottom">-->
+<!--									<a href="#" class="comment__link comment__link&#45;&#45;answer">Ответить</a>-->
+<!--									<a href="#" class="comment__link">Цитировать</a>-->
+<!--									<a href="#" data-fancybox="" data-src="#modal-complaint" class="comment__link">Пожаловаться</a>-->
+<!--								</div>-->
+<!--							</article>-->
+
+<!--							<article class="comment">-->
+<!--								<h3 class="visually-hidden">Комментарий</h3>-->
+<!--								<div class="comment__wrapper">-->
+<!--									<div class="comment__image-wrapper">-->
+<!--										<img src="{% static 'img/user-3.jpg' %}" alt="Аватар пользователя">-->
+<!--									</div>-->
+<!--									<div class="comment__inner-wrapper">-->
+<!--										<b class="comment__username">Николай 134</b>-->
+<!--										<time class="comment__date" datetime="18:12">Сегодня 18:12</time>-->
+<!--									</div>-->
+<!--								</div>-->
+<!--								<div class="comment__text">-->
+<!--									<p>Правильно, побольше woman empowerment. После увольнения Колпакова и Красильщика их здесь не хватает.</p>-->
+<!--								</div>-->
+<!--								<time class="comment__date comment__date&#45;&#45;mobile-only" datetime="18:12">Сегодня 18:12</time>-->
+<!--								<div class="comment__inner-wrapper-bottom">-->
+<!--									<a href="#" class="comment__link comment__link&#45;&#45;answer">Ответить</a>-->
+<!--									<a href="#" class="comment__link">Цитировать</a>-->
+<!--									<a href="#" data-fancybox="" data-src="#modal-complaint" class="comment__link">Пожаловаться</a>-->
+<!--								</div>-->
+<!--							</article>-->
+
+						</section>
+						<article class="add-comment mrg-bottom-20">
+							<h2 class="add-comment__title">Оставить комментарий</h2>
+							<form action="">
+								<div class="add-comment__textarea-wrapper">
+									<textarea class="progect-textarea progect-textarea--add-comment add-smile" placeholder="Напишите ваш текст"></textarea>
+								</div>
+								<div class="add-comment__wrapper">
+									<!--                  <span class="add-comment__text">Авторизуйтесь, чтобы отправлять коментарии</span>-->
+									<div class="file-wrapper file-wrapper--comment">
+										<div class="photos"></div>
+										<input class="file-input" data-photo="single" type="file" id="photo">
+										<label class="file-label" for="photo"><span class="file-image file-image--min"></span></label>
+									</div>
+									<button class="button button--dark" type="submit">Отправить</button>
+								</div>
+							</form>
+						</article>
+						<article class="alert">
+							<span class="alert__text">Чтобы оставить комментарий, войдите через любую соцсеть:</span>
+							<div class="social alert__social">
+								<h3 class="visually-hidden">Мы в социальных сетях</h3>
+								<ul class="social__list">
+									<li class="social__item"><a href="#" class="social__link social__link--vk"><span class="visually-hidden">Вконтакте</span></a></li>
+									<li class="social__item"><a href="#" class="social__link social__link--fb"><span class="visually-hidden">Фейсбук</span></a></li>
+									<li class="social__item"><a href="#" class="social__link social__link--odnk"><span class="visually-hidden">Одноклассники</span></a></li>
+									<li class="social__item"><a href="#" class="social__link social__link--inst"><span class="visually-hidden">Инстаграм</span></a></li>
+								</ul>
+							</div>
+						</article>
+					</div>
+				</div>
+				<div class="main-greed__right-column">
+					<div class="bunner-side fixed-block">
+						<a href="#" class="bunner-side__link">
+							<img src="img/banner10.jpg" alt="Реклама на сайте">
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="banner">
+				<div class="container">
+					<a href="#" class="banner__link">
+						<picture>
+							<source media="(max-width: 767px)" srcset="http://placehold.it/320x120">
+							<source media="(max-width: 1024px)" srcset="http://placehold.it/728x100">
+							<img src="img/banner3.jpg" alt="Реклама">
+						</picture>
+					</a>
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+
+{% block bottomlinks %}
+    <script src="{% static 'scripts/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'scripts/headhesive/headhesive.min.js' %}"></script>
+    <script src="{% static 'scripts/fancybox/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'scripts/emoji/dist/emojionearea.min.js' %}"></script>
+    <script src="{% static 'scripts/main-header.js' %}"></script>
+    <script src="{% static 'scripts/upload.js' %}"></script>
+    <script src="{% static 'scripts/script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% load thumbnail %}
+
+{% if more_articles %}
+    <article class="reading">
+        <h2 class="reading__title">Читайте также</h2>
+        <div class="reading__wrapper">
+
+            <div class="reading__left">
+                {% for article in more_articles|slice:":3" %}
+                    <article class="reading__item reading-item">
+                        <a target="_blank" href="{% url 'content_show_article' article.slug %}" class="reading-item__link">
+                            <div class="reading-item__image-wrapper">
+                                <img src="{% thumbnail article.teaser2 96x65 crop %}" alt="фото статьи">
+                            </div>
+                            <h3 class="reading-item__title">{{ article.title }}</h3>
+                        </a>
+                    </article>
+                {% endfor %}
+            </div>
+
+            <div class="reading__right">
+                {% for article in more_articles|slice:"3:6" %}
+                    <article class="reading__item reading-item">
+                        <a target="_blank" href="{% url 'content_show_article' article.slug %}" class="reading-item__link">
+                            <div class="reading-item__image-wrapper">
+                                <img src="{% thumbnail article.teaser2 96x65 crop %}" alt="фото статьи">
+                            </div>
+                            <h3 class="reading-item__title">{{ article.title }}</h3>
+                        </a>
+                    </article>
+                {% endfor %}
+            </div>
+
+        </div>
+    </article>
+{% endif %}

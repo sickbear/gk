@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block main %}
+<main class="index-main">
+    {% block top-container %}{{ block.super }}{% endblock %}
+
+    <div class="only-mobile-block">
+        <div class="container">
+            <div class="button-wrapper">
+                <button class="button button--inner button--arrow" data-button="hotnews">Оперативные новости
+                    <svg width="8" height="4">
+                        <use xlink:href="#arrow"></use>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-row">
+        <div class="container">
+
+            {# Главные новости #}
+
+            {# Оперативные новости #}
+
+        </div>
+    </div>
+
+    {# Банер №1 #}
+    <div class="banner">
+        <div class="container">
+            <a href="#" class="banner__link">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="http://placehold.it/320x120">
+                    <source media="(max-width: 1024px)" srcset="http://placehold.it/728x100">
+                    <img src="{% static 'img/banner2.jpg' %}" alt="Реклама">
+                </picture>
+            </a>
+        </div>
+    </div>
+
+    {# Городские новости 1 экран #}
+
+    {# Банер №2 #}
+    <div class="banner">
+        <div class="container">
+            <a href="#" class="banner__link">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="http://placehold.it/320x120">
+                    <source media="(max-width: 1024px)" srcset="http://placehold.it/728x100">
+                    <img src="{% static 'img/banner3.jpg' %}" alt="Реклама">
+                </picture>
+            </a>
+        </div>
+    </div>
+
+    {# Слайдер #}
+
+    {# Городские новости 2 экран #}
+
+    {# Банер №3 #}
+    <div class="banner">
+        <div class="container">
+            <a href="#" class="banner__link">
+                <picture>
+                    <source media="(max-width: 767px)" srcset="http://placehold.it/320x120">
+                    <source media="(max-width: 1024px)" srcset="http://placehold.it/728x100">
+                    <img src="{% static 'img/banner5.jpg' %}" alt="Реклама">
+                </picture>
+            </a>
+        </div>
+    </div>
+
+    {# Городские новости 3 экран #}
+
+    <div class="container button-wrapper">
+        <button onclick="window.location.href='/news'" class="button button--inner button">Читать еще</button>
+    </div>
+
+</main>
+{% endblock %}

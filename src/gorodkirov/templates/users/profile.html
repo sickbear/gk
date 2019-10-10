@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block toplinks %}
+    <link rel="stylesheet" href="{% static 'scripts/fancybox/jquery.fancybox.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+{% endblock %}
+
+{% block main %}
+	<main class="inner-main">
+		{% block top-container %}{{ block.super }}{% endblock %}
+
+		<div class="top-panel">
+			<div class="container">
+				<div class="breadcrumbs">
+					<ul class="breadcrumbs__list">
+						<li class="breadcrumbs__item">
+                            <a href="/" class="breadcrumbs__link">Главная</a>
+                        </li>
+                        {% block profile_breadcrumbs %}
+                            <li class="breadcrumbs__item">
+                                <a class="breadcrumbs__link">Личный кабинет</a>
+                            </li>
+                        {% endblock %}
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="profile">
+			<div class="container">
+				<div class="profile__left-column">
+					<section class="profile-card">
+						<b class="profile-card__username">
+                            {% if user.first_name or user.last_name %}
+                                {{ user.first_name }} {{ user.last_name }}
+                            {% else %}
+                                {{ user.username }}
+                            {% endif %}
+                        </b>
+
+                        {# with user.user.avatar as avatar #}
+                            {# if avatar #}
+                                <div class="profile-card__img-wrapper">
+                                    <img class="profile-card__img" src="{% thumbnail user.user.avatar 257x234 crop %}">
+                                </div>
+                            {# endif #}
+                        {# endwith #}
+
+                        <a href="{% url 'edit_profile' %}" class="button button--inner button">Редактировать</a>
+						<div class="link-group">
+							<ul class="link-group__list">
+								<li class="link-group__item">
+                                    <a href="#" class="link-group__link">Мои объявления на Авто 43</a>
+                                </li>
+								<li class="link-group__item">
+                                    <a href="#" class="link-group__link">Мои объявления на Дом 43</a>
+                                </li>
+								<li class="link-group__item">
+                                    <a href="#" class="link-group__link">Мои резюме на Джоб 43</a>
+                                </li>
+								<li class="link-group__item">
+                                    <a href="#" class="link-group__link">Мои вакансии на Джоб 43</a>
+                                </li>
+							</ul>
+						</div>
+					</section>
+					<a href="#" class="button button--pale profile-card--pale">Техподдержка</a>
+				</div>
+				<div class="profile__right-column">
+                    {% block right_column %}{% endblock %}
+				</div>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+
+{% block bottomlinks %}
+    <script src="{% static 'scripts/jquery-3.3.1.min.js' %}"></script>
+    <script src="{% static 'scripts/headhesive/headhesive.min.js' %}"></script>
+    <script src="{% static 'scripts/fancybox/jquery.fancybox.min.js' %}"></script>
+    <script src="{% static 'scripts/main-header.js' %}"></script>
+    <script src="{% static 'scripts/script.js' %}"></script>
+    <script src="{% static 'scripts/upload.js' %}"></script>
+{% endblock %}

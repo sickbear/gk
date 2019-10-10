@@ -1,0 +1,121 @@
+{% extends "users/profile.html" %}
+
+{% block profile_breadcrumbs %}
+    <li class="breadcrumbs__item">
+        <a href="{% url 'show_profile' %}" class="breadcrumbs__link">Личный кабинет</a>
+    </li>
+    <li class="breadcrumbs__item">
+        <a class="breadcrumbs__link">Редактировать профиль</a>
+    </li>
+{% endblock %}
+
+{% block right_column %}
+    <form class="form" action="{% url 'show_profile' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="hidden" name="username" value="{{ user.username }}">
+        <section class="form__wrapper">
+            <h2 class="title--dark">Профиль пользователя</h2>
+            <div class="form__for-flex">
+                <div class="form__left-column">
+                    <div>
+                        <label class="progect-label" for="name">Имя<sup>*</sup></label>
+                        <input class="progect-input"
+                               type="text"
+                               id="name"
+                               value="{{ user.first_name }}"
+                               name="first_name"
+                               required="">
+                    </div>
+                    <div>
+                        <label class="progect-label" for="surname">Фамилия<sup>*</sup></label>
+                        <input class="progect-input"
+                               type="text"
+                               id="surname"
+                               value="{{ user.last_name }}"
+                               name="last_name"
+                               required="">
+                    </div>
+                    <div>
+                        <label class="progect-label" for="city">Город</label>
+                        <div class="select-wrapper">
+                            <select class="progect-select" id="city" name="city">
+                                <option value="0">Выбрать город</option>
+                                <option value="1">Киров</option>
+                                <option value="2">Сочи</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="progect-label">Пол</span>
+                        <div class="radio-wrapper">
+                            <div>
+                                <input class="radio-input" type="radio" value="male" name="sex" id="male" checked="">
+                                <label class="radio-label radio-label--left" for="male" tabindex="0">Мужской</label>
+                            </div>
+                            <div>
+                                <input class="radio-input" type="radio" value="male" name="sex" id="female">
+                                <label class="radio-label radio-label--right" for="female" tabindex="0">Женский</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="progect-label" for="date">Дата рождения</label>
+                        <input class="progect-input" type="date" id="date" name="birthday">
+                    </div>
+                </div>
+                <div class="form__right-column">
+                    <div>
+                        <label class="progect-label" for="email">Электронная почта<sup>*</sup></label>
+                        <input class="progect-input"
+                               type="email"
+                               id="email"
+                               value="{{ user.email }}"
+                               name="email"
+                               required="">
+                    </div>
+                    <div>
+                        <label class="progect-label" for="tel">Телефон</label>
+                        <input class="progect-input" type="tel" id="tel" name="phone">
+                    </div>
+                    <div class="file-wrapper">
+                        <input class="file-input" data-photo="one" type="file" id="photo" name="avatar">
+                        <label class="progect-label file-label" for="photo">
+                            <span class="file-image"></span>Загрузите <br> свое фото
+                        </label>
+                    </div>
+                    <button class="button button--dark profile-form--dark" type="submit">Сохранить</button>
+                </div>
+            </div>
+        </section>
+    </form>
+
+    <form class="form" action="{% url 'edit_profile' %}" method="POST">
+        {% csrf_token %}
+        <section class="form__wrapper">
+            <h2 class="title--dark">Смена пароля</h2>
+            <div class="form__for-flex">
+                <div class="form__left-column">
+                    <div class="field-wrapper">
+                        <label class="progect-label" for="oldpassword">Старый пароль<sup>*</sup></label>
+                        <input class="progect-input progect-input--password"
+                               type="password" id="oldpassword" name="password" required="">
+                        <button type="button" class="modal__password-btn">
+                            <span class="visually-hidden">Показать пароль</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="form__right-column">
+                    <div class="field-wrapper">
+                        <label class="progect-label" for="newpassword">Новый пароль<sup>*</sup></label>
+                        <input class="progect-input progect-input--password"
+                               type="password" id="newpassword" required="">
+                        <button type="button" class="modal__password-btn">
+                            <span class="visually-hidden">Показать пароль</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <button class="button button--dark profile-form--dark mrg-bottom" type="submit">Сохранить</button>
+        </section>
+    </form>
+{% endblock %}

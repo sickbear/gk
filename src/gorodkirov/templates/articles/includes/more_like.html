@@ -1,0 +1,22 @@
+{% if more_articles %}
+    <section class="news-feed news-feed--article fixed-block">
+        <h2 class="news-feed__main-title">Статьи по теме:</h2>
+        {% for article in more_articles|slice:"6:11" %}
+            <article class="news-feed__item">
+                <time class="news-feed__time"
+                      datetime="{{ article.date_created|date:'d-m-y H:i' }}">
+                    {% if today == article.date_created|date:'d-m-y' %}
+                        Сегодня, {{ article.date_created|date:'H:i' }}
+                    {% else %}
+                        {{ article.date_created|date:'d.m.y, H:i' }}
+                    {% endif %}
+                </time>
+                <header class="news-feed__header">
+                    <a href="{% url 'content_show_article' article.slug %}" class="link">
+                        <h2 class="news-feed__title">{{ article.title }}</h2>
+                    </a>
+                </header>
+            </article>
+        {% endfor %}
+    </section>
+{% endif %}
