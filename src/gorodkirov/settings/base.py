@@ -15,10 +15,21 @@ INSTALLED_APPS = [
 
     # third-party apps
     'mptt',
+    'captcha',
     'easy_thumbnails',
+    'widget_tweaks',
     'debug_toolbar',
 
-    'gorodkirov.users'
+    # social account
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.odnoklassniki',
+    'allauth.socialaccount.providers.instagram',
+
+    'gorodkirov.users',
 ]
 
 MIDDLEWARE = [
@@ -37,7 +48,7 @@ ROOT_URLCONF = 'gorodkirov.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'), ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -52,17 +63,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'gorodkirov.wsgi.application'
 
-AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        'OPTIONS': {
-            'min_length': 6,
-        }
-    },
-]
+AUTH_PASSWORD_VALIDATORS = []
 
 TIME_ZONE = 'Europe/Moscow'
 LANGUAGE_CODE = 'ru-RU'
@@ -89,5 +90,19 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
     'compressor.finders.CompressorFinder',
+)
+
+# reCaptcha v2
+RECAPTCHA_PUBLIC_KEY = '6Lfbhr0UAAAAAEq58JSa3iLcr76uedRuEl5C8SpY'
+RECAPTCHA_PRIVATE_KEY = '6Lfbhr0UAAAAAFyiFQARIV9kU6x4FaVqWT2C7PE-'
+RECAPTCHA_PROXY = {'http': 'http://127.0.0.1:8000'}
+
+
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
 )
 

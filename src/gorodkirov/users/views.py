@@ -1,6 +1,6 @@
 # coding=utf-8
-from django.shortcuts import render, redirect
-from django.contrib import messages
+import json
+from django.shortcuts import render, render_to_response, redirect
 from django.http import HttpResponse
 from django.contrib.auth.models import User
 from django.contrib.auth import login
@@ -10,17 +10,24 @@ from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.core.mail import send_mail
 from django.conf import settings
+from django.template import loader
 from .tokens import account_activation_token
 from .forms import SignupForm
 
 
+def json_response(x):
+    """Формирование JSON-ответа."""
+    return HttpResponse(json.dumps(x, sort_keys=True, indent=2), content_type='application/json; charset=UTF-8')
+
+
 def register(request):
-    """
+    """Регистрация нового пользователя.
+
     Получает регистрационные данные нового пользователя
     и отправляет письмо подтверждения email.
     Регестрирует пользователя в базе (auth_user: is_active=False).
     """
-    if request.POST:
+    if request.is_ajax:
         post_dict = request.POST.copy()
         post_dict['password2'] = post_dict['password1']
         form = SignupForm(post_dict)
@@ -40,12 +47,14 @@ def register(request):
             to_email = []
             to_email.insert(0, form.cleaned_data.get('email'))
             send_mail(mail_subject, message, from_email, to_email, fail_silently=False)
-            return redirect('homepage')
-        else:
-            print(form.errors)
 
-    form = SignupForm()
-    return render(request, 'homepage.html', context={'form': form})
+            template = loader.get_template('modals/includes/registration_success.html')
+            template_html = template.render()
+            return json_response({'success': True, 'html': template_html})
+        else:
+            return json_response({'success': False, 'errors': form.errors})
+
+    return redirect('homepage')
 
 
 def activate(request, uidb64, token):

@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block main %}
+    <main class="inner-main">
+        {% block top-container %}{{ block.super }}{% endblock %}
+
+        <form action="{% url 'login' %}?next=/" method="POST" style="max-width: 710px;">
+            <div class="login">
+                {% csrf_token %}
+                <div>
+                    <p class="card__text">{{ form.username.label_tag }}</p>
+                    {{ form.username|add_class:"progect-input" }}
+                </div>
+                <div class="field-wrapper">
+                    <p class="card__text">{{ form.password.label_tag }}</p>
+                    {{ form.password|add_class:"progect-input" }}
+                </div>
+            </div>
+            <div role="alert" style="color: #fe4349;">
+                {{ form.errors }}
+            </div>
+            <button class="button button--dark modal--button" type="submit">Войти</button>
+        </form>
+    </main>
+{% endblock %}
