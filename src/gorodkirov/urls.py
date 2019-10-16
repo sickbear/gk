@@ -5,10 +5,12 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
+from material.admin.sites import site
 from gorodkirov.users import views as user_views
 from . import views
 
 app_name = 'gorodkirov'
+site.site_header = ('GorodKirov.ru')
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
@@ -16,9 +18,10 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='accounts/login.html'), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
     path('activate/<uidb64>/<token>/', user_views.activate, name='activate'),
-    path('admin/', admin.site.urls),
+    path('admin/', include('material.admin.urls')),
 
     path('accounts/', include('allauth.urls')),
+    path('tinymce/', include('tinymce.urls')),
 ]
 
 if settings.DEBUG:

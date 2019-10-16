@@ -1,6 +1,7 @@
 <!DOCTYPE html>{% spaceless %}
 {% load static %}
 {% load thumbnail %}
+{% load cms_tags %}
 {# load articles_tags #}
 {# load userinfo_tags #}
 
@@ -47,7 +48,7 @@
 				<div class="logo">
 				    <a class="logo__link" href="/">
 						<img class="logo__image"
-							 src="{% static 'img/logo.png' %}"
+							 src="{% logo %}"
 							 width="200"
 							 alt="Логотип сайта город Киров">
 				    </a>
@@ -126,17 +127,7 @@
 				<div class="container">
 					<div class="actual-rubrics">
 						<ul class="actual-rubrics__list">
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Выборы 2018</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Новостройки</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">ЖКХ</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Дешевые авиабилеты</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Общество</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Политика</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Происшествия</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Спорт</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Семья</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Политика</a></li>
-							<li class="actual-rubrics__item"><a href="#" class="actual-rubrics__link">Семья</a></li>
+							{% cms_template 'top_menu_links' %}
 						</ul>
 					</div>
 					<div class="top-container__social social">
@@ -175,7 +166,7 @@
 				<div class="main-footer__left">
 				    <div class="logo">
 						<a class="logo__link" href="/">
-						    <img class="logo__image" src="{% static 'img/logo.png' %}" width="200" alt="Логотип сайта город Киров">
+						    <img class="logo__image" src="" width="200" alt="Логотип сайта город Киров">
 						</a>
 				    </div>
 				</div>
@@ -241,7 +232,7 @@
 			<div class="burger-panel__wrapper-top">
 			    <div class="logo">
 					<a class="logo__link" href="/">
-					    <img class="logo__image" src="{% static 'img/logo.png' %}" width="240" alt="Логотип сайта город Киров">
+					    <img class="logo__image" src="" width="240" alt="Логотип сайта город Киров">
 					</a>
 			    </div>
 			    <nav class="burger-panel__nav">
