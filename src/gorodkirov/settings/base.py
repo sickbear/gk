@@ -1,3 +1,4 @@
+# coding: utf-8
 import os
 
 BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
@@ -30,6 +31,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.instagram',
 
     'gorodkirov.users',
+    'gorodkirov.articles',
     'gorodkirov.cmstemplates',
 ]
 
@@ -136,6 +138,8 @@ TINYMCE_DEFAULT_CONFIG = {
     'menubar': True,
     'statusbar': True,
 }
+
+ADMIN_TITLE = ('Панель администратора GorodKirov.ru')
 
 
 

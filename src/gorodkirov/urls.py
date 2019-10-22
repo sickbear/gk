@@ -10,7 +10,7 @@ from gorodkirov.users import views as user_views
 from . import views
 
 app_name = 'gorodkirov'
-site.site_header = ('GorodKirov.ru')
+site.site_header = settings.ADMIN_TITLE
 
 urlpatterns = [
     path('', views.homepage, name='homepage'),
