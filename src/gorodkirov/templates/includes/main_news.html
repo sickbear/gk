@@ -5,17 +5,16 @@
 
     <article class="half-card half-card-news">
         <a class="half-card-news__link"
-           href="{% url 'content_show_article' articles.0.slug %}"
-           style="background-image: url({% thumbnail articles.0.teaser2 602x380 crop %});">
+           href="{% url 'content_show_article' main_news.0.slug %}"
+           style="background-image: url({% thumbnail main_news.0.main_photo 602x380 crop %});">
             <div class="half-card-news__wrapper">
                 <header class="half-card-news__header">
-                    <h2 class="half-card-news__title">{{ articles.0.title }}</h2>
+                    <h2 class="half-card-news__title">{{ main_news.0.title }}</h2>
                 </header>
                 <div class="stamp">
                     <div class="stamp__left">
                         <b class="stamp__item stamp__item--time">Час назад</b>
                         <b class="stamp__item stamp__item--views">256</b>
-                        <b class="stamp__item stamp__item--comments">256</b>
                     </div>
                     <div class="stamp__right">
                         <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
@@ -24,21 +23,21 @@
             </div>
         </a>
         <a href="#" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
-        <a class="tag tag--white" href="/content/rubric/{{ articles.0.rubric.slug }}">{{ articles.0.rubric }}</a>
+        <a class="tag tag--white" href="/content/rubric/{{ main_news.0.rubric.slug }}">{{ main_news.0.rubric }}</a>
         <div class="hashteg">
-            {% for tag in articles.0.tags.all %}
+            {% for tag in main_news.0.tags.all %}
                 <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
             {% endfor %}
         </div>
     </article>
 
     <article class="third-card third-card-news-bg">
-        <a href="{% url 'content_show_article' articles.1.slug %}"
+        <a href="{% url 'content_show_article' main_news.1.slug %}"
            class="third-card-news-bg__link"
-           style="background-image: url({% thumbnail articles.1.teaser2 293x380 crop %});">
+           style="background-image: url({% thumbnail main_news.1.main_photo 293x380 crop %});">
             <div class="third-card-news-bg__wrapper">
                 <header class="third-card-news-bg__header">
-                    <h2 class="third-card-news-bg__title">{{ articles.1.title }}</h2>
+                    <h2 class="third-card-news-bg__title">{{ main_news.1.title }}</h2>
                 </header>
                 <div class="stamp">
                     <div class="stamp__left">
@@ -52,23 +51,23 @@
             </div>
         </a>
         <a href="#" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
-        <a class="tag  tag--white" href="/content/rubric/{{ articles.1.rubric.slug }}">{{ articles.1.rubric }}</a>
+        <a class="tag  tag--white" href="/content/rubric/{{ main_news.1.rubric.slug }}">{{ main_news.1.rubric }}</a>
         <div class="hashteg">
-            {% for tag in articles.1.tags.all %}
+            {% for tag in main_news.1.tags.all %}
                 <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
             {% endfor %}
         </div>
     </article>
 
     <article class="third-card third-card-news">
-        <a href="{% url 'content_show_article' articles.2.slug %}" class="third-card-news__link">
+        <a href="{% url 'content_show_article' main_news.2.slug %}" class="third-card-news__link">
             <div class="flex-wrapper">
                 <div class="third-card-news__img"
-                     style="background-image: url({% thumbnail articles.2.teaser2 293x195 crop %});">
+                     style="background-image: url({% thumbnail main_news.2.main_photo 293x195 crop %});">
                 </div>
                 <div class="third-card-news__wrapper">
                     <header class="third-card-news__header">
-                        <h2 class="third-card-news__title">{{ articles.2.title }}</h2>
+                        <h2 class="third-card-news__title">{{ main_news.2.title }}</h2>
                     </header>
                     <div class="stamp">
                         <div class="stamp__left">
@@ -83,23 +82,23 @@
             </div>
         </a>
         <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
-        <a class="tag" href="/content/rubric/{{ articles.2.rubric.slug }}">{{ articles.2.rubric }}</a>
+        <a class="tag" href="/content/rubric/{{ main_news.2.rubric.slug }}">{{ main_news.2.rubric }}</a>
         <div class="hashteg">
-            {% for tag in articles.2.tags.all %}
+            {% for tag in main_news.2.tags.all %}
                 <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
             {% endfor %}
         </div>
     </article>
 
     <article class="third-card third-card-news">
-        <a href="{% url 'content_show_article' articles.3.slug %}" class="third-card-news__link">
+        <a href="{% url 'content_show_article' main_news.3.slug %}" class="third-card-news__link">
             <div class="flex-wrapper">
                 <div class="third-card-news__img"
-                     style="background-image: url({% thumbnail articles.3.teaser2 293x195 crop %});">
+                     style="background-image: url({% thumbnail main_news.3.main_photo 293x195 crop %});">
                 </div>
                 <div class="third-card-news__wrapper">
                     <header class="third-card-news__header">
-                        <h2 class="third-card-news__title">{{ articles.3.title }}</h2>
+                        <h2 class="third-card-news__title">{{ main_news.3.title }}</h2>
                     </header>
                     <div class="stamp">
                         <div class="stamp__left">
@@ -114,23 +113,23 @@
             </div>
         </a>
         <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
-        <a class="tag" href="/content/rubric/{{ articles.3.rubric.slug }}">{{ articles.3.rubric }}</a>
+        <a class="tag" href="/content/rubric/{{ main_news.3.rubric.slug }}">{{ main_news.3.rubric }}</a>
         <div class="hashteg">
-            {% for tag in articles.3.tags.all %}
+            {% for tag in main_news.3.tags.all %}
                 <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
             {% endfor %}
         </div>
     </article>
 
     <article class="third-card third-card-news">
-        <a href="{% url 'content_show_article' articles.4.slug %}" class="third-card-news__link">
+        <a href="{% url 'content_show_article' main_news.4.slug %}" class="third-card-news__link">
             <div class="flex-wrapper">
                 <div class="third-card-news__img"
-                     style="background-image: url({% thumbnail articles.4.teaser2 293x195 crop %});">
+                     style="background-image: url({% thumbnail main_news.4.main_photo 293x195 crop %});">
                 </div>
                 <div class="third-card-news__wrapper">
                     <header class="third-card-news__header">
-                        <h2 class="third-card-news__title">{{ articles.4.title }}</h2>
+                        <h2 class="third-card-news__title">{{ main_news.4.title }}</h2>
                     </header>
                     <div class="stamp">
                         <div class="stamp__left">
@@ -145,9 +144,9 @@
             </div>
         </a>
         <a href="#" class="bookmark"><span class="bookmark__text bookmark__text--dark ">В закладки</span></a>
-        <a class="tag" href="/content/rubric/{{ articles.4.rubric.slug }}">{{ articles.4.rubric }}</a>
+        <a class="tag" href="/content/rubric/{{ main_news.4.rubric.slug }}">{{ main_news.4.rubric }}</a>
         <div class="hashteg">
-            {% for tag in articles.4.tags.all %}
+            {% for tag in main_news.4.tags.all %}
                 <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
             {% endfor %}
         </div>

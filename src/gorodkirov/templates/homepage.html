@@ -22,8 +22,10 @@
         <div class="container">
 
             {# Главные новости #}
+            {% include 'includes/main_news.html' %}
 
             {# Оперативные новости #}
+            {% include 'includes/operational_news.html' %}
 
         </div>
     </div>
@@ -42,6 +44,7 @@
     </div>
 
     {# Городские новости 1 экран #}
+    {% include 'includes/city_news_1.html' %}
 
     {# Банер №2 #}
     <div class="banner">
@@ -57,8 +60,10 @@
     </div>
 
     {# Слайдер #}
+    {% include 'includes/slider_news.html' %}
 
     {# Городские новости 2 экран #}
+    {% include 'includes/city_news_2.html' %}
 
     {# Банер №3 #}
     <div class="banner">
@@ -74,6 +79,8 @@
     </div>
 
     {# Городские новости 3 экран #}
+    {% include 'includes/city_news_3.html' %}
+
 
     <div class="container button-wrapper">
         <button onclick="window.location.href='/news'" class="button button--inner button">Читать еще</button>

@@ -20,3 +20,17 @@ class SiteLogo(models.Model):
     class Meta:
         verbose_name = 'Логотип сайта'
         verbose_name_plural = 'Логотипы сайта'
+
+
+class NewSettings(models.Model):
+    """Настройки новостей."""
+    COUNT = [
+        (1, 1,), (2, 2,), (3, 3,), (4, 4,), (5, 5,), (6, 6,), (7, 7,), (8, 8,), (9, 9,), (10, 10,)
+    ]
+
+    name = models.CharField('Название раздела', max_length=55, db_index=True)
+    count = models.PositiveSmallIntegerField('Количество коммерч. статей', choices=COUNT)
+
+    class Meta:
+        verbose_name = 'Настройки новостей'
+        verbose_name_plural = 'Настройки новостей'

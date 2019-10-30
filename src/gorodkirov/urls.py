@@ -19,6 +19,8 @@ urlpatterns = [
     path('logout/', LogoutView.as_view(), name='logout'),
     path('activate/<uidb64>/<token>/', user_views.activate, name='activate'),
     path('admin/', include('material.admin.urls')),
+    path('content/', include('gorodkirov.articles.urls')),
+    path('news/', views.timeline, name='timeline'),
 
     path('accounts/', include('allauth.urls')),
     path('tinymce/', include('tinymce.urls')),

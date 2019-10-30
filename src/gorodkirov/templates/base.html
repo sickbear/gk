@@ -41,7 +41,7 @@
 	{# СРОЧНО #}
 	<div class="attention">
 		<div class="container">
-			{% get_urgent_article as urgent_article %}
+			{% show_urgent_article as urgent_article %}
 		    <b class="attention__label">Срочно</b>
 		    <b class="attention__label attention__label--sign">!</b>
 		    <p class="attention__news">{{ urgent_article.0.title }}</p>
