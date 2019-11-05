@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% load static %}
+{% load thumbnail %}
+{% now 'd-m-y' as today %}
+
+{% block toplinks %}
+	<link rel="stylesheet" href="{% static 'scripts/fancybox/jquery.fancybox.min.css' %}">
+	<link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+	<script src="https://vk.com/js/api/openapi.js?160"></script>
+{% endblock %}
+
+{% block main %}
+	<main class="inner-main">
+		{% block top-container %}{{ block.super }}{% endblock %}
+
+		<div class="top-panel">
+			<div class="container">
+				<div class="breadcrumbs">
+					<ul class="breadcrumbs__list">
+						<li class="breadcrumbs__item"><a href="/" class="breadcrumbs__link">Главная</a></li>
+						<li class="breadcrumbs__item"><a class="breadcrumbs__link">{{ article.title }}</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+		<div class="main-content-wrapper">
+			<div class="main-greed">
+				<div class="container">
+					<div class="main-greed__left-column mrg-right pdg-20 bg-white pdg-bottom-20">
+						<article class="article-block">
+							<header class="article-header">
+								<div class="article-header__wrapper">
+									<a href="{% url 'content_show_rubric' article.rubric.slug %}"
+									   class="article-header__rubric">
+										{{ article.rubric }}
+									</a>
+                                    <time class="article-header__time"
+                                          datetime="{{ article.date_created|date:'d-m-y H:i' }}">
+                                        {% if today == article.date_created|date:'d-m-y' %}
+                                            Сегодня, {{ article.date_created|date:'H:i' }}
+                                        {% else %}
+                                            {{ article.date_created|date:'d M Y, H:i'|lower }}
+                                        {% endif %}
+                                    </time>
+									<a href="#" class="article-header__bookmarks">Добавить в закладки</a>
+								</div>
+								<h1 class="title">{{ article.title }}</h1>
+								<div class="hashteg hashteg--in-page">
+									{% for tag in article.tags.all %}
+                                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                                    {% endfor %}
+								</div>
+							</header>
+							<div class="article-block__image-wrapper">
+								<img src="{% thumbnail article.main_photo 877x401 crop %}" alt="{{ article.title }}">
+							</div>
+							<div class="article-block__author author">
+								<div class="author__image-wrapper">
+									<img src="{% thumbnail article.author.photo 53x53 crop %}" alt="Фотография автора">
+								</div>
+								<span class="author__name"><b>Автор:</b> {{ article.author.name }}</span>
+							</div>
+
+							<div class="article-block__text text-block">
+								{{ article.text|safe }}
+							</div>
+
+							<div class="line-v1">
+								<a href="#" class="line-v1__link">
+									<span class="line-v1__text line-v1__text--inst">
+										Читайте новости «Город Киров» в Instagram
+									</span>
+								</a>
+							</div>
+
+							{% include 'articles/includes/article_footer.html' %}
+						</article>
+
+						<div class="vk-widget">
+							<div id="vk_groups-1"></div>
+							<script type="text/javascript">
+								VK.Widgets.Group("vk_groups-1", {
+									mode: 3,
+									width: "auto"
+								}, 59750825);
+							</script>
+						</div>
+
+						{% include 'articles/includes/more_articles.html' with more_articles=more_articles %}
+					</div>
+
+					<div class="main-greed__right-column">
+						<div class="bunner-side mrg-bottom">
+							<a href="#" class="bunner-side__link">
+								<img src="{% static 'img/banner10.jpg' %}" alt="Реклама на сайте">
+							</a>
+						</div>
+
+						{% include 'articles/includes/more_like.html' with more_articles=more_articles %}
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+	</main>
+
+{% endblock %}
+
+{% block bottomlinks %}
+	<script src="{% static 'scripts/jquery-3.3.1.min.js' %}"></script>
+	<script src="{% static 'scripts/headhesive/headhesive.min.js' %}"></script>
+	<script src="{% static 'scripts/fancybox/jquery.fancybox.min.js' %}"></script>
+	<script src="{% static 'scripts/main-header.js' %}"></script>
+	<script src="{% static 'scripts/script.js' %}"></script>
+{% endblock %}

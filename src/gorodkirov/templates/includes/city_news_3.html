@@ -1,40 +1,11 @@
 {% load static %}
 {% load thumbnail %}
-{% load cms_tags %}
 
 <section class="news">
     <div class="container">
         <div class="news__flex-row">
 
-            <article class="half-card half-card-news">
-                <a class="half-card-news__link"
-                   href="{% url 'content_show_article' big_block_3.slug %}"
-                   style="background-image: url({% thumbnail big_block_3.main_photo 602x380 crop %});">
-                    <div class="half-card-news__wrapper">
-                        <header class="half-card-news__header">
-                            <h2 class="half-card-news__title">{{ big_block_3.title }}</h2>
-                        </header>
-                        <div class="stamp">
-                            <div class="stamp__left">
-                                <b class="stamp__item stamp__item--time">Час назад</b>
-                                <b class="stamp__item stamp__item--views">256</b>
-                            </div>
-                            <div class="stamp__right">
-                                <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
-                <a class="tag tag--white" href="{% url 'content_show_rubric' big_block_3.rubric.slug %}">
-                    {{ big_block_3.rubric }}
-                </a>
-                <div class="hashteg">
-                    {% for tag in big_block_3.tags.all %}
-                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
-                    {% endfor %}
-                </div>
-            </article>
+            {% include 'includes/big_block.html' with big_block=big_block_3 %}
 
             <article class="third-card third-card-news">
                 <a href="{% url 'content_show_article' city_block_3.0.slug %}" class="third-card-news__link">
@@ -356,19 +327,7 @@
             </div>
 
             <div class="while-card video-file">
-                {% cms_template 'video_file' %}
-                <script>
-                    var video_file = document.querySelector('.video-file iframe');
-                    video_file.style.width='100%';
-                    video_file.style.height='370px';
-                </script>
-                <style>
-                    .video-file__text {
-                        margin-top: 10px;
-                        color: rgba(44,61,82,.8);
-                        font-size: 15px;
-                    }
-                </style>
+                {% include 'includes/video_file.html' with height='370px' %}
             </div>
 
         </div>

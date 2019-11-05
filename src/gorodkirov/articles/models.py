@@ -60,6 +60,21 @@ class Tag(models.Model):
         return self.text
 
 
+class PopularTag(models.Model):
+    """Популярный тег рубрики."""
+    tag = models.ForeignKey('Tag', verbose_name='Тег', related_name='tags', on_delete=models.CASCADE)
+    rubric = models.ForeignKey(
+        'Rubric', verbose_name='Рубрика', related_name='tags', null=True, blank=True, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Популярный тег'
+        verbose_name_plural = 'Популярные теги'
+        ordering = ['tag__text']
+
+    def __str__(self):
+        return self.tag.text
+
+
 class Rubric(MPTTModel):
     """Рубрика статьи."""
     name = models.CharField('Название', max_length=255, db_index=True)
@@ -114,6 +129,7 @@ class Article(models.Model):
     big_block = models.BooleanField('Выводить в «Большом блоке»', default=False, db_index=True)
     chronicle = models.BooleanField('Выводить в «Хронике»', default=False, db_index=True)
     test_drive = models.BooleanField('Выводить в «Тест-драйве»', default=False, db_index=True)
+    editors_choice = models.BooleanField('Выбор редакции', default=False, db_index=True)
     for_yandex = models.BooleanField('Статья для Яндекса', db_index=True)
     for_rss = models.BooleanField('Статья для RSS', db_index=True)
     for_dzen = models.BooleanField('Статья для DZEN', db_index=True)

@@ -6,7 +6,7 @@ from mptt.admin import MPTTModelAdmin
 from tinymce.widgets import TinyMCE
 from tinymce import HTMLField
 from .models import (
-    Rubric, Article, InformationType, ArticleType, Tag, Author,
+    Rubric, Article, InformationType, ArticleType, Tag, PopularTag, Author,
     OperationalArticle, CityDetails, ChronicleRubric, ChronicleArticle, TestDriveArticle
 )
 
@@ -31,6 +31,14 @@ class TagAdmin(MaterialModelAdmin):
     list_display = ('id', 'text')
     search_fields = ('text',)
     icon_name = 'label'
+
+
+@register(PopularTag)
+class PopularTagAdmin(MaterialModelAdmin):
+    list_display = ['tag', 'rubric']
+    search_fields = ['tag__text', 'rubric__name']
+    list_filter = ['rubric']
+    ordering = ['rubric', 'tag__text']
 
 
 @register(Rubric)

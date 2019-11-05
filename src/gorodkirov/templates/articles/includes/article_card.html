@@ -1,0 +1,45 @@
+{% load static %}
+{% load thumbnail %}
+{% now 'd-m-y' as today %}
+
+<section class="card">
+    {% for article in articles %}
+        <article class="card__item">
+            <a href="{% url 'content_show_article' article.slug %}" class="card__link">
+                <div class="card__image-wrapper">
+                    <img src="{% thumbnail article.main_photo 202x136 crop %}"
+                         alt="{{ article.title }}">
+                </div>
+                <div class="card__wrapper">
+                    <header class="card__header">
+                        <h2 class="card__title">{{ article.title }}</h2>
+                    </header>
+                    <p class="card__text">{{ article.text|striptags|cut:"&nbsp;"|slice:"80"}}</p>
+                </div>
+            </a>
+            <div class="card__inner-wrapper">
+                <a href="{% url 'content_show_rubric' article.rubric.slug %}" class="card__rubric">
+                    {{ article.rubric }}
+                </a>
+                <a href="##" class="bookmark">
+                    <span class="bookmark__text bookmark__text--dark ">В закладки</span>
+                </a>
+            </div>
+            <div class="marks">
+                <time class="card__time"
+                      datetime="{{ article.date_created|date:'d-m-y H:i' }}">
+                    {% if today == article.date_created|date:'d-m-y' %}
+                        Сегодня, {{ article.date_created|date:'H:i' }}
+                    {% else %}
+                        {{ article.date_created|date:'d.m.y, H:i' }}
+                    {% endif %}
+                </time>
+                <div class="hashteg">
+                    {% for tag in article.tags.all %}
+                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        </article>
+    {% endfor %}
+</section>

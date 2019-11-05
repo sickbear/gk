@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 from django.contrib.auth.views import LoginView, LogoutView
 from material.admin.sites import site
 from gorodkirov.users import views as user_views
+from gorodkirov.articles import views as article_views
 from . import views
 
 app_name = 'gorodkirov'
@@ -20,7 +21,8 @@ urlpatterns = [
     path('activate/<uidb64>/<token>/', user_views.activate, name='activate'),
     path('admin/', include('material.admin.urls')),
     path('content/', include('gorodkirov.articles.urls')),
-    path('news/', views.timeline, name='timeline'),
+    path('news/', article_views.timeline, name='timeline'),
+    path('tags/', article_views.articles_by_tags, name='articles_by_tags'),
 
     path('accounts/', include('allauth.urls')),
     path('tinymce/', include('tinymce.urls')),

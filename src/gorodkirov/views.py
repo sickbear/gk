@@ -1,7 +1,6 @@
 # coding=utf-8
 from django.shortcuts import render
 from gorodkirov.users.forms import SignupForm
-
 from gorodkirov.articles import queries as articles_queries
 
 
@@ -16,6 +15,7 @@ def homepage(request):
     city_details.get_result()
     chronicle_rubrics = articles_queries.get_chronicle_rubrics()
     test_drive = articles_queries.get_test_drive()
+    inner = False
 
     return render(request, 'homepage.html', {
         'form': SignupForm,
@@ -29,9 +29,5 @@ def homepage(request):
         'big_block_1': big_block_1,
         'big_block_2': big_block_2,
         'big_block_3': big_block_3,
+        'inner': inner,
     })
-
-
-def timeline(request):
-    """Отображает ленту новостей."""
-    pass

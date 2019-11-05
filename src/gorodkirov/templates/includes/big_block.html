@@ -1,0 +1,36 @@
+{% load static %}
+{% load thumbnail %}
+
+<article class="half-card half-card-news {% if inner %}half-card--inner{% endif %}">
+    <a class="half-card-news__link"
+       href="{% url 'content_show_article' big_block.slug %}"
+       style="{% if inner %}
+                  background-image: url({% thumbnail big_block.main_photo 451x280 crop %});
+              {% else %}
+                  background-image: url({% thumbnail big_block.main_photo 602x380 crop %});
+              {% endif %}">
+        <div class="half-card-news__wrapper">
+            <header class="half-card-news__header">
+                <h2 class="half-card-news__title">{{ big_block.title }}</h2>
+            </header>
+            <div class="stamp">
+                <div class="stamp__left">
+                    <b class="stamp__item stamp__item--time">Час назад</b>
+                    <b class="stamp__item stamp__item--views">256</b>
+                </div>
+                <div class="stamp__right">
+                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                </div>
+            </div>
+        </div>
+    </a>
+    <a href="#" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
+    <a class="tag tag--white" href="{% url 'content_show_rubric' big_block.rubric.slug %}">
+        {{ big_block.rubric }}
+    </a>
+    <div class="hashteg">
+        {% for tag in big_block.tags.all %}
+            <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
+        {% endfor %}
+    </div>
+</article>

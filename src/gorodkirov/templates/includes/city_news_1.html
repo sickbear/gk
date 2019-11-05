@@ -199,35 +199,7 @@
                 </div>
             </article>
 
-            <article class="half-card half-card-news">
-                <a class="half-card-news__link"
-                   href="{% url 'content_show_article' big_block_1.slug %}"
-                   style="background-image: url({% thumbnail big_block_1.main_photo 602x380 crop %});">
-                    <div class="half-card-news__wrapper">
-                        <header class="half-card-news__header">
-                            <h2 class="half-card-news__title">{{ big_block_1.title }}</h2>
-                        </header>
-                        <div class="stamp">
-                            <div class="stamp__left">
-                                <b class="stamp__item stamp__item--time">Час назад</b>
-                                <b class="stamp__item stamp__item--views">256</b>
-                            </div>
-                            <div class="stamp__right">
-                                <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-                <a href="#" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
-                <a class="tag tag--white" href="{% url 'content_show_rubric' big_block_1.rubric.slug %}">
-                    {{ big_block_1.rubric }}
-                </a>
-                <div class="hashteg">
-                    {% for tag in big_block_1.tags.all %}
-                        <a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
-                    {% endfor %}
-                </div>
-            </article>
+            {% include 'includes/big_block.html' with big_block=big_block_1 %}
 
             <div class="half-card">
 

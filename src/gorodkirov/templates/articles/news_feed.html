@@ -21,7 +21,7 @@
 				<div class="breadcrumbs">
 					<ul class="breadcrumbs__list">
 						<li class="breadcrumbs__item"><a href="/" class="breadcrumbs__link">Главная</a></li>
-						<li class="breadcrumbs__item"><a class="breadcrumbs__link">Лента новостей</a></li>
+						<li class="breadcrumbs__item"><a class="breadcrumbs__link">{{ label }}</a></li>
 					</ul>
 				</div>
 			</div>
@@ -31,63 +31,28 @@
 			<div class="container">
 				<div class="main-greed__left-column mrg-right">
 					<div class="sort mrg-btm-8">
-						<div class="hashteg">
-                            {% get_popular_tags as popular_tags %}
-                            {% for tag in popular_tags %}
-                                <a href="{{ tag.get_absolute_url }}" class="hashteg__item">#{{ tag }}</a>
-                            {% endfor %}
-						</div>
 
-						<h2 class="sort__title">{{ title }}</h2>
+						{% if label.id %}
+							<div class="hashteg">
+								{% show_popular_tags label.id as popular_tags %}
+								{% for tag in popular_tags %}
+									<a href="/tags/?t={{ tag }}" class="hashteg__item">#{{ tag }}</a>
+								{% endfor %}
+							</div>
+						{% endif %}
+
+						<h2 class="sort__title">{{ label }}</h2>
 
 						<div class="sort__wrapper">
 							<button type="button" class="sort__button sort__button--red">Свежее</button>
-							<button type="button" class="sort__button sort__button--weight" id="datefilter">Популярное </button>
+							<button type="button" class="sort__button sort__button--weight" id="datefilter">
+								Популярное
+							</button>
 							<button type="button" class="sort__button">Выбор редакции</button>
 						</div>
 					</div>
 
-					<section class="card">
-                        {% for article in articles|slice:":4" %}
-                            <article class="card__item">
-                                <a href="/content/article/{{ article.slug }}/" class="card__link">
-                                    <div class="card__image-wrapper">
-                                        <img src="{% thumbnail article.teaser2 202x136 crop %}"
-											 alt="{{ article.title }}">
-                                    </div>
-                                    <div class="card__wrapper">
-                                        <header class="card__header">
-                                            <h2 class="card__title">{{ article.title }}</h2>
-                                        </header>
-                                        <p class="card__text">{{ article.text|striptags|cut:"&nbsp;"|slice:"80"}}</p>
-                                    </div>
-                                </a>
-                                <div class="card__inner-wrapper">
-                                    <a href="/content/rubric/{{ article.rubric.slug }}" class="card__rubric">
-										{{ article.rubric }}
-									</a>
-                                    <a href="##" class="bookmark">
-										<span class="bookmark__text bookmark__text--dark ">В закладки</span>
-									</a>
-                                </div>
-                                <div class="marks">
-									<time class="card__time"
-                                          datetime="{{ article.date_created|date:'d-m-y H:i' }}">
-                                        {% if today == article.date_created|date:'d-m-y' %}
-                                            Сегодня, {{ article.date_created|date:'H:i' }}
-                                        {% else %}
-                                            {{ article.date_created|date:'d.m.y, H:i' }}
-                                        {% endif %}
-                                    </time>
-                                    <div class="hashteg">
-										{% for tag in article.tags.all %}
-											<a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
-										{% endfor %}
-                                    </div>
-                                </div>
-                            </article>
-                        {% endfor %}
-					</section>
+                    {% include 'articles/includes/article_card.html' with articles=articles|slice:":4" %}
 
 					<div class="banner">
 						<a href="#" class="banner__link">
@@ -99,358 +64,21 @@
 						</a>
 					</div>
 
-					<section class="card">
-						{% for article in articles|slice:"4:6" %}
-                            <article class="card__item">
-                                <a href="/content/article/{{ article.slug }}/" class="card__link">
-                                    <div class="card__image-wrapper">
-                                        <img src="{% thumbnail article.teaser2 202x136 crop %}"
-											 alt="{{ article.title }}">
-                                    </div>
-                                    <div class="card__wrapper">
-                                        <header class="card__header">
-                                            <h2 class="card__title">{{ article.title }}</h2>
-                                        </header>
-                                        <p class="card__text">{{ article.text|striptags|cut:"&nbsp;"|slice:"80"}}</p>
-                                    </div>
-                                </a>
-                                <div class="card__inner-wrapper">
-                                    <a href="/content/rubric/{{ article.rubric.slug }}" class="card__rubric">
-										{{ article.rubric }}
-									</a>
-                                    <a href="##" class="bookmark">
-										<span class="bookmark__text bookmark__text--dark ">В закладки</span>
-									</a>
-                                </div>
-                                <div class="marks">
-									<time class="card__time"
-                                          datetime="{{ article.date_created|date:'d-m-y H:i' }}">
-                                        {% if today == article.date_created|date:'d-m-y' %}
-                                            Сегодня, {{ article.date_created|date:'H:i' }}
-                                        {% else %}
-                                            {{ article.date_created|date:'d.m.y, H:i' }}
-                                        {% endif %}
-                                    </time>
-                                    <div class="hashteg">
-										{% for tag in article.tags.all %}
-											<a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
-										{% endfor %}
-                                    </div>
-                                </div>
-                            </article>
-                        {% endfor %}
-					</section>
+					{% include 'articles/includes/article_card.html' with articles=articles|slice:"4:8" %}
 
 					<div class="news__flex-row">
-						<article class="half-card half-card--inner half-card-advert">
-							<a class="half-card-advert__link" href="#1">
-								<picture>
-									<!--                <source media="(max-width: 767px)" srcset="img/banner4.jpg">-->
-									<!--                <source media="(max-width: 1024px)" srcset="img/banner4.jpg">-->
-									<img class="half-card-advert__img"
-										 src="{% static 'img/banner4.jpg' %}"
-										 alt="Реклама">
-								</picture>
-							</a>
-						</article>
 
-						<div class="half-card-slider half-card-slider--inner visually-hide">
-							<article class="half-card half-card--inner half-card-news">
-								<a class="half-card-news__link"
-								   href="#"
-								   style="background-image: url({% static 'img/news8.jpg' %})">
-									<div class="half-card-news__wrapper">
-										<header class="half-card-news__header">
-											<h2 class="half-card-news__title">Где вкусно покушать в Кирове</h2>
-										</header>
-										<div class="stamp">
-											<div class="stamp__left">
-												<b class="stamp__item stamp__item--time">Час назад</b>
-												<b class="stamp__item stamp__item--views">256</b>
-												<b class="stamp__item stamp__item--comments">256</b>
-											</div>
-											<div class="stamp__right">
-												<span class="stamp__item stamp__item--reading">Читать 5 мин</span>
-											</div>
-										</div>
-									</div>
-								</a>
-								<a href="##" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
-								<a class="tag tag--white" href="#">Спецпроект</a>
-								<div class="hashteg">
-									<a href="#" class="hashteg__item">#еда</a>
-									<a href="#" class="hashteg__item">#развлечения</a>
-								</div>
-							</article>
-							<article class="half-card half-card--inner half-card-news">
-								<a class="half-card-news__link"
-								   href="#"
-								   style="background-image: url({% static 'img/news8.jpg' %})">
-									<div class="half-card-news__wrapper">
-										<header class="half-card-news__header">
-											<h2 class="half-card-news__title">Где вкусно покушать в Кирове</h2>
-										</header>
-										<div class="stamp">
-											<div class="stamp__left">
-												<b class="stamp__item stamp__item--time">Час назад</b>
-												<b class="stamp__item stamp__item--views">256</b>
-												<b class="stamp__item stamp__item--comments">256</b>
-											</div>
-											<div class="stamp__right">
-												<span class="stamp__item stamp__item--reading">Читать 5 мин</span>
-											</div>
-										</div>
-									</div>
-								</a>
-								<a href="##" class="bookmark bookmark--white"><span class="bookmark__text">В закладки</span></a>
-								<a class="tag tag--white" href="#">Спецпроект</a>
-								<div class="hashteg">
-									<a href="#" class="hashteg__item">#еда</a>
-									<a href="#" class="hashteg__item">#развлечения</a>
-								</div>
-							</article>
-						</div>
+						{% include 'includes/big_block.html' with big_block=big_block_1 %}
+                        {% include 'includes/big_block.html' with big_block=big_block_2 %}
+
 					</div>
 
-					<div class="card">
-						{% for article in articles|slice:"6:8" %}
-                            <article class="card__item">
-                                <a href="/content/article/{{ article.slug }}/" class="card__link">
-                                    <div class="card__image-wrapper">
-                                        <img src="{% thumbnail article.teaser2 202x136 crop %}"
-											 alt="{{ article.title }}">
-                                    </div>
-                                    <div class="card__wrapper">
-                                        <header class="card__header">
-                                            <h2 class="card__title">{{ article.title }}</h2>
-                                        </header>
-                                        <p class="card__text">{{ article.text|striptags|cut:"&nbsp;"|slice:"80"}}</p>
-                                    </div>
-                                </a>
-                                <div class="card__inner-wrapper">
-                                    <a href="/content/rubric/{{ article.rubric.slug }}" class="card__rubric">
-										{{ article.rubric }}
-									</a>
-                                    <a href="##" class="bookmark">
-										<span class="bookmark__text bookmark__text--dark ">В закладки</span>
-									</a>
-                                </div>
-                                <div class="marks">
-									<time class="card__time"
-                                          datetime="{{ article.date_created|date:'d-m-y H:i' }}">
-                                        {% if today == article.date_created|date:'d-m-y' %}
-                                            Сегодня, {{ article.date_created|date:'H:i' }}
-                                        {% else %}
-                                            {{ article.date_created|date:'d.m.y, H:i' }}
-                                        {% endif %}
-                                    </time>
-                                    <div class="hashteg">
-										{% for tag in article.tags.all %}
-											<a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
-										{% endfor %}
-                                    </div>
-                                </div>
-                            </article>
-                        {% endfor %}
-					</div>
+					{% include 'articles/includes/article_card.html' with articles=articles|slice:"8:10" %}
 
-					<div class="rubric rubric--inner  is-js-rubric-slider hide">
-						<article class="rubric-item rubric-item--inner"
-								 style="background-image: linear-gradient(to right, #2c3d5a 18%, rgba(44, 61, 90, 0.3),
-								 		#2c3d5a 92%), url({% static 'img/rubric-back.jpg' %})">
-							<div class="container">
-								<div class="slick-prev"><span class="vishually-hidden">стрелка слайдера влево</span></div>
-								<div class="rubric-item__wrapper">
-									<div class="rubric-item__left">
-										<a class="tag tag--white" href="#">Хроника</a>
-										<header class="rubric-item__header">
-											<h2 class="rubric-item__main-title">Пенсионная реформа в России</h2>
-										</header>
-										<div class="rubric-item__text">
-											<p>
-												Весной 2018 года Правительство объявило о старте новой пенсионной
-												реформы в России, которая начнет реализовываться уже в 2019 году .
-												Первым этапом очередной реформы будет повышение пенсионного возраста
-												до 65/60 лет для мужчин и женщин.
-											</p>
-										</div>
-									</div>
-									<div class="rubric-item__right">
-										<button class="rubric-item__toggle rubric-item__toggle--v1 button--arrow">
-											Смотреть статьи по теме
-											<svg width="8" height="4">
-												<use xlink:href="#arrow"></use>
-											</svg>
-										</button>
-										<div class="rubric-news rubric-news--v1 rubric-news--v1-inner">
-											<span class="rubric-news__sub">Смотреть статьи</span>
-											<div class="rubric-news__item">
-												<a href="#" class="rubric-news__link">
-													<time class="rubric-news__time"
-														  datetime="2019-01-31 09:33">Сегодня, 09:33
-													</time>
-													<h3 class="rubric-news__title">
-														Откат или отмена? Пенсионная реформа повисла в воздухе
-													</h3>
-												</a>
-											</div>
-											<div class="rubric-news__item">
-												<a href="#" class="rubric-news__link">
-													<time class="rubric-news__time" datetime="2019-01-31 09:33">Сегодня, 09:33</time>
-													<h3 class="rubric-news__title">
-														Пенсионная реформа в России 2018: последниеновости и видео
-													</h3>
-												</a>
-											</div>
-											<div class="rubric-news__news">
-												<a href="#" class="rubric-news__link">
-													<time class="rubric-news__time" datetime="2019-01-31 09:33">Сегодня, 09:33</time>
-													<h3 class="rubric-news__title">
-														Пенсионная реформа не тянет губернаторов вниз.Снижением рейтинга
-														«Единой России» некому воспользоваться
-													</h3>
-												</a>
-											</div>
-											<a href="#" class="rubric-news__more">Читать всю хронику по теме »</a>
-										</div>
-									</div>
-								</div>
-								<div class="slick-next"><span class="visually-hidden">стрелка слайдера вправо</span></div>
-							</div>
-						</article>
+					{# Слайдер #}
+    				{% include 'includes/slider_news.html' %}
 
-						<article class="rubric-item rubric-item--inner"
-								 style="background-image: linear-gradient(90deg, #010A3D 10%, rgba(1, 10, 61, 0.8) 20%,
-								 rgba(149, 0, 58, 0.8) 80%, rgba(149, 0, 58, 1) 100%),
-								 url({% static 'img/rubric-back.jpg' %})">
-							<div class="container">
-								<div class="slick-prev"><span class="vishually-hidden">стрелка слайдера влево</span></div>
-								<div class="rubric-item__wrapper">
-									<div class="rubric-item__left">
-										<a class="tag tag--white" href="#">Хроника</a>
-										<header class="rubric-item__header">
-											<h2 class="rubric-item__main-title">Пенсионная реформа в России</h2>
-										</header>
-										<div class="rubric-item__text">
-											<p>
-												Весной 2018 года Правительство объявило о старте новой пенсионной
-												реформы в России, которая начнет реализовываться уже в 2019 году.
-												Первым этапом очередной реформы будет повышение пенсионного возраста до
-												65/60 лет для мужчин и женщин.
-											</p>
-										</div>
-									</div>
-									<div class="rubric-item__right">
-										<button class="rubric-item__toggle button--arrow">Смотреть статьи по теме
-											<svg width="8" height="4">
-												<use xlink:href="#arrow"></use>
-											</svg>
-										</button>
-										<div class="rubric-news rubric-news--v2">
-											<span class="rubric-news__sub">Смотреть статьи</span>
-											<div class="rubric-news__item">
-												<a href="#" class="rubric-news__link">
-													<time class="rubric-news__time" datetime="2019-01-31 09:33">Сегодня, 09:33</time>
-													<h3 class="rubric-news__title">
-														Откат или отмена? Пенсионная реформа повисла в воздухе
-													</h3>
-												</a>
-											</div>
-											<div class="rubric-news__item">
-												<a href="#" class="rubric-news__link">
-													<time class="rubric-news__time" datetime="2019-01-31 09:33">Сегодня, 09:33</time>
-													<h3 class="rubric-news__title">
-														Пенсионная реформа в России 2018: последниеновости и видео
-													</h3>
-												</a>
-											</div>
-											<div class="rubric-news__news">
-												<a href="#" class="rubric-news__link">
-													<time class="rubric-news__time"
-														  datetime="2019-01-31 09:33">Сегодня, 09:33
-													</time>
-													<h3 class="rubric-news__title">
-														Пенсионная реформа не тянет губернаторов вниз. Снижением
-														рейтинга «Единой России» некому воспользоваться
-													</h3>
-												</a>
-											</div>
-											<a href="#" class="rubric-news__more">Читать всю хронику по теме »</a>
-										</div>
-
-									</div>
-								</div>
-								<div class="slick-next"><span class="visually-hidden">стрелка слайдера вправо</span></div>
-							</div>
-						</article>
-
-						<article class="rubric-item rubric-item--inner"
-								 style="background-image:  linear-gradient(to right, #2c3d5a 18%, rgba(44, 61, 90, 0.3),
-								 #2c3d5a 92%), url({% static 'img/car.jpg' %})">
-							<div class="container">
-								<div class="slick-prev"><span class="vishually-hidden">стрелка слайдера влево</span></div>
-								<div class="rubric-item__wrapper">
-									<div class="rubric-item__left">
-										<a class="tag tag--white" href="#">Тест-драйв</a>
-										<header class="rubric-item__header">
-											<h2 class="rubric-item__main-title">Тест-драйв Mazda CX-9:</h2>
-											<p class="rubric-item__sub-title">больше уже не куда, <br> да и не за чем?</p>
-										</header>
-										<div class="rubric-item__text">
-											<p>
-												Весной 2018 года Правительство объявило о старте новой пенсионной
-												реформы в России, которая начнет реализовываться уже в 2019 году.
-												Первым этапом очередной реформы будет
-											</p>
-										</div>
-									</div>
-								</div>
-								<div class="slick-next"><span class="visually-hidden">стрелка слайдера вправо</span></div>
-							</div>
-						</article>
-					</div>
-
-					<div class="card">
-						{% for article in articles|slice:"8:10" %}
-                            <article class="card__item">
-                                <a href="/content/article/{{ article.slug }}/" class="card__link">
-                                    <div class="card__image-wrapper">
-                                        <img src="{% thumbnail article.teaser2 202x136 crop %}"
-											 alt="{{ article.title }}">
-                                    </div>
-                                    <div class="card__wrapper">
-                                        <header class="card__header">
-                                            <h2 class="card__title">{{ article.title }}</h2>
-                                        </header>
-                                        <p class="card__text">{{ article.text|striptags|cut:"&nbsp;"|slice:"80"}}</p>
-                                    </div>
-                                </a>
-                                <div class="card__inner-wrapper">
-                                    <a href="/content/rubric/{{ article.rubric.slug }}" class="card__rubric">
-										{{ article.rubric }}
-									</a>
-                                    <a href="##" class="bookmark">
-										<span class="bookmark__text bookmark__text--dark ">В закладки</span>
-									</a>
-                                </div>
-                                <div class="marks">
-									<time class="card__time"
-                                          datetime="{{ article.date_created|date:'d-m-y H:i' }}">
-                                        {% if today == article.date_created|date:'d-m-y' %}
-                                            Сегодня, {{ article.date_created|date:'H:i' }}
-                                        {% else %}
-                                            {{ article.date_created|date:'d.m.y, H:i' }}
-                                        {% endif %}
-                                    </time>
-                                    <div class="hashteg">
-										{% for tag in article.tags.all %}
-											<a href="/tags/?t={{tag.text}}" class="hashteg__item">#{{ tag }}</a>
-										{% endfor %}
-                                    </div>
-                                </div>
-                            </article>
-                        {% endfor %}
-					</div>
+					{% include 'articles/includes/article_card.html' with articles=articles|slice:"10:12" %}
 
 					<div class="banner">
 						<a href="#" class="banner__link">
@@ -461,6 +89,28 @@
 							</picture>
 						</a>
 					</div>
+
+                    {% include 'articles/includes/article_card.html' with articles=articles|slice:"12:16" %}
+
+                    <div class="banner">
+						<a href="#" class="banner__link">
+							<picture>
+								<source media="(max-width: 767px)" srcset="http://placehold.it/320x120">
+								<source media="(max-width: 1024px)" srcset="http://placehold.it/728x100">
+								<img src="{% static 'img/banner5.jpg' %}" alt="Реклама">
+							</picture>
+						</a>
+					</div>
+
+                    {% include 'articles/includes/article_card.html' with articles=articles|slice:"16:20" %}
+
+                    <div class="news__flex-row">
+						{% include 'includes/big_block.html' with big_block=big_block_3 %}
+                        <div class="half-card half-card--inner video-file">
+                            {% include 'includes/video_file.html' with height='280px' %}
+                        </div>
+					</div>
+
 				</div>
 
 				<div class="main-greed__right-column pdg-btm-8">

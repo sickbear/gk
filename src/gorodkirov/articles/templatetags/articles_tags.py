@@ -18,3 +18,9 @@ def show_chronicle_artciles(rubric):
     """Отображает статьи Хроники."""
     return articles_queries.get_chronicle_artciles(rubric)
 
+
+@register.simple_tag()
+def show_popular_tags(rubric):
+    """Отображает популярные теги."""
+    return articles_queries.get_popular_tags(rubric)
+

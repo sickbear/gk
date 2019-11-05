@@ -1,0 +1,15 @@
+{% load cms_tags %}
+
+{% cms_template 'video_file' %}
+<script>
+    var video_file = document.querySelector('.video-file iframe');
+    video_file.style.width='100%';
+    video_file.style.height='{{ height }}';
+</script>
+<style>
+    .video-file__text {
+        margin-top: 10px;
+        color: rgba(44,61,82,.8);
+        font-size: 15px;
+    }
+</style>
