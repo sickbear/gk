@@ -1,7 +1,8 @@
 # coding=utf-8
 import json
-from django.shortcuts import render, render_to_response, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib.sites.shortcuts import get_current_site
@@ -13,6 +14,7 @@ from django.conf import settings
 from django.template import loader
 from .tokens import account_activation_token
 from .forms import SignupForm
+from .models import Profile
 
 
 def json_response(x):
@@ -71,3 +73,21 @@ def activate(request, uidb64, token):
         return redirect('homepage')
     else:
         return HttpResponse('Activation link is invalid!')
+
+
+@login_required
+def show_profile(request):
+    """Отображает аккаунт пользователя с закладками."""
+    return render(request, 'users/includes/bookmarks.html', {})
+
+
+@login_required
+def show_read(request):
+    """Отображает аккаунт пользователя с прочитанными новостями."""
+    return render(request, 'users/includes/read_news.html', {})
+
+
+@login_required
+def edit_profile(request):
+    """Отображает страницу редактирования профиля."""
+    return render(request, 'users/includes/edit_profile.html', {})

@@ -82,19 +82,20 @@
 
 				{% if user.is_authenticated %}
 					<div class="user">
-						<a href="{# url 'show_profile' #}" class="user__link">
-							<div class="user__img-wrapper">
-								{% if user.user.avatar %}
-									<img src="{% thumbnail user.user.avatar 32x32 crop %}" alt="">
-								{% endif %}
-							</div>
-							{% if user.first_name or user.last_name %}
-								<p class="user__name">{{ user.first_name }} {{ user.last_name }}</p>
+						<a href="{% url 'show_profile' %}" class="user__link">
+
+							{# if avatar #}
+								<div class="user__img-wrapper">
+									<img src="{% thumbnail user.profile.avatar 32x32 crop %}" alt="">
+								</div>
+							{# endif #}
+
+							{% if first_name or last_name %}
+								<p class="user__name">{{ first_name }} {{ last_name }}</p>
 							{% else %}
-								<p class="user__name">{{ user.username }}</p>
+								<p class="user__name">{{ username }}</p>
 							{% endif %}
 						</a>
-
 						<style>
 							.user {position:relative;}
 							.logout {position:absolute;right: 0;display:none}
@@ -235,13 +236,8 @@
 							    Работа
 							</a>
 					    </li>
-					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Новости</a></li>
-					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Интервью</a></li>
-					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Репортаж</a></li>
-					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Срочные новости</a></li>
-					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Хроника событий</a></li>
-					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Спецпроекты</a></li>
-					    <li class="burger-panel__item"><a href="#" class="burger-panel__link">Форум</a></li>
+
+						{% cms_template 'burger_menu' %}
 					</ul>
 			    </nav>
 			</div>

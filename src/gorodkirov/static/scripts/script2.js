@@ -41,9 +41,11 @@ $(document).ready(function () {
             error: function(errorData) {
                 $('.registration_form_errors').empty().append('<p>Нет ответа от сервера, попробуйте позже.</p>');
             }
-
         });
 
     });
+
+    // маска для телефона
+    $('input[name=phone]').mask('+7(999)999-9999');
 
 });

@@ -35,10 +35,10 @@ class TagAdmin(MaterialModelAdmin):
 
 @register(PopularTag)
 class PopularTagAdmin(MaterialModelAdmin):
-    list_display = ['tag', 'rubric']
-    search_fields = ['tag__text', 'rubric__name']
-    list_filter = ['rubric']
-    ordering = ['rubric', 'tag__text']
+    list_display = ('tag', 'rubric')
+    search_fields = ('tag__text', 'rubric__name')
+    list_filter = ('rubric', )
+    ordering = ('rubric', 'tag__text')
 
 
 @register(Rubric)

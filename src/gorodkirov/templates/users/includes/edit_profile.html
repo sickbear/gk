@@ -12,7 +12,7 @@
 {% block right_column %}
     <form class="form" action="{% url 'show_profile' %}" method="POST" enctype="multipart/form-data">
         {% csrf_token %}
-        <input type="hidden" name="username" value="{{ user.username }}">
+        <input type="hidden" name="username" value="{{ username }}">
         <section class="form__wrapper">
             <h2 class="title--dark">Профиль пользователя</h2>
             <div class="form__for-flex">
@@ -22,7 +22,7 @@
                         <input class="progect-input"
                                type="text"
                                id="name"
-                               value="{{ user.first_name }}"
+                               value="{{ first_name }}"
                                name="first_name"
                                required="">
                     </div>
@@ -31,36 +31,50 @@
                         <input class="progect-input"
                                type="text"
                                id="surname"
-                               value="{{ user.last_name }}"
+                               value="{{ last_name }}"
                                name="last_name"
                                required="">
                     </div>
                     <div>
-                        <label class="progect-label" for="city">Город</label>
+                        <label class="progect-label" for="city">Город<sup>*</sup></label>
                         <div class="select-wrapper">
-                            <select class="progect-select" id="city" name="city">
+                            <select class="progect-select" id="city" name="city" required="">
                                 <option value="0">Выбрать город</option>
-                                <option value="1">Киров</option>
-                                <option value="2">Сочи</option>
+                                <option value="1" {% if city == 'Киров' %}selected{% endif %}>Киров</option>
                             </select>
                         </div>
                     </div>
                     <div>
-                        <span class="progect-label">Пол</span>
+                        <span class="progect-label">Пол<sup>*</sup></span>
                         <div class="radio-wrapper">
                             <div>
-                                <input class="radio-input" type="radio" value="male" name="sex" id="male" checked="">
+                                <input class="radio-input"
+                                       type="radio"
+                                       value="male"
+                                       name="sex"
+                                       id="male"
+                                       required=""
+                                       {% if gender == 'male' %}checked=''{% endif %}>
                                 <label class="radio-label radio-label--left" for="male" tabindex="0">Мужской</label>
                             </div>
                             <div>
-                                <input class="radio-input" type="radio" value="male" name="sex" id="female">
+                                <input class="radio-input"
+                                       type="radio"
+                                       value="female"
+                                       name="sex"
+                                       id="female"
+                                       {% if gender == 'female' %}checked=''{% endif %}>
                                 <label class="radio-label radio-label--right" for="female" tabindex="0">Женский</label>
                             </div>
                         </div>
                     </div>
                     <div>
                         <label class="progect-label" for="date">Дата рождения</label>
-                        <input class="progect-input" type="date" id="date" name="birthday">
+                        <input class="progect-input"
+                               type="date"
+                               id="date"
+                               name="birthday"
+                               value="{{ birthday|date:'Y-m-d' }}">
                     </div>
                 </div>
                 <div class="form__right-column">
@@ -69,13 +83,13 @@
                         <input class="progect-input"
                                type="email"
                                id="email"
-                               value="{{ user.email }}"
+                               value="{{ email }}"
                                name="email"
                                required="">
                     </div>
                     <div>
                         <label class="progect-label" for="tel">Телефон</label>
-                        <input class="progect-input" type="tel" id="tel" name="phone">
+                        <input class="progect-input" type="tel" id="tel" name="phone" value="{{ phone }}">
                     </div>
                     <div class="file-wrapper">
                         <input class="file-input" data-photo="one" type="file" id="photo" name="avatar">

@@ -32,20 +32,18 @@
 				<div class="profile__left-column">
 					<section class="profile-card">
 						<b class="profile-card__username">
-                            {% if user.first_name or user.last_name %}
-                                {{ user.first_name }} {{ user.last_name }}
+                            {% if first_name or last_name %}
+                                {{ first_name }} {{ last_name }}
                             {% else %}
-                                {{ user.username }}
+                                {{ username }}
                             {% endif %}
                         </b>
 
-                        {# with user.user.avatar as avatar #}
-                            {# if avatar #}
-                                <div class="profile-card__img-wrapper">
-                                    <img class="profile-card__img" src="{% thumbnail user.user.avatar 257x234 crop %}">
-                                </div>
-                            {# endif #}
-                        {# endwith #}
+                        {% if avatar %}
+                            <div class="profile-card__img-wrapper">
+                                <img class="profile-card__img" src="{% thumbnail avatar 257x234 crop %}">
+                            </div>
+                        {% endif %}
 
                         <a href="{% url 'edit_profile' %}" class="button button--inner button">Редактировать</a>
 						<div class="link-group">
@@ -78,8 +76,10 @@
 {% block bottomlinks %}
     <script src="{% static 'scripts/jquery-3.3.1.min.js' %}"></script>
     <script src="{% static 'scripts/headhesive/headhesive.min.js' %}"></script>
+    <script src="{% static 'scripts/maskedinput/jquery.maskedinput.min.js' %}"></script>
     <script src="{% static 'scripts/fancybox/jquery.fancybox.min.js' %}"></script>
     <script src="{% static 'scripts/main-header.js' %}"></script>
     <script src="{% static 'scripts/script.js' %}"></script>
+    <script src="{% static 'scripts/script2.js' %}"></script>
     <script src="{% static 'scripts/upload.js' %}"></script>
 {% endblock %}

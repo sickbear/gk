@@ -49,7 +49,7 @@ class Author(models.Model):
 
 class Tag(models.Model):
     """Текстовый тег."""
-    text = models.CharField('Текст', max_length=30, help_text=u'Максимальная длина тега - 30 символов')
+    text = models.CharField('Текст', max_length=30, help_text='Максимальная длина тега - 30 символов')
 
     class Meta:
         verbose_name = 'Тег'
@@ -108,12 +108,13 @@ class Article(models.Model):
     published_at = models.DateTimeField('Начало публикации', db_index=True, blank=True, null=True)
     published_to = models.DateTimeField('Конец публикации', db_index=True, blank=True, null=True)
     info_type = models.ForeignKey(
-        InformationType, verbose_name='Тип информации', related_name='articles', default=1, on_delete=models.CASCADE)
+        InformationType, verbose_name='Тип информации', related_name='articles',
+        db_index=True, default=1, on_delete=models.CASCADE)
     article_type = models.ForeignKey(
-        ArticleType, verbose_name='Шаблон', related_name='articles', on_delete=models.CASCADE)
+        ArticleType, verbose_name='Шаблон', db_index=True, related_name='articles', on_delete=models.CASCADE)
     age_restriction = models.CharField('Возрастное ограничение', max_length=2, choices=AGE_CHOICES, default=0)
     title = models.CharField('Заголовок статьи', max_length=500, db_index=True)
-    slug = models.SlugField('URL', max_length=500, unique=False, default='')
+    slug = models.SlugField('URL',  db_index=True, max_length=500, unique=False, default='')
     seo_title = models.CharField('Тайтл (SEO)', max_length=300, blank=True)
     seo_description = models.CharField('Описание (SEO)', max_length=300, blank=True)
     seo_keywords = models.CharField('Ключ.слова (SEO)', max_length=300, blank=True)
