@@ -13,7 +13,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.template import loader
 from .tokens import account_activation_token
-from .forms import SignupForm
+from .forms import SignupForm, ProfileForm
 from .models import Profile
 
 
@@ -44,7 +44,7 @@ def register(request):
                 'uid': urlsafe_base64_encode(force_bytes(user.pk)),
                 'token': account_activation_token.make_token(user),
             })
-            mail_subject = u'Активация аккаунта на Gorodkirov.ru'
+            mail_subject = 'Активация аккаунта на Gorodkirov.ru'
             from_email = settings.EMAIL_HOST_USER
             to_email = []
             to_email.insert(0, form.cleaned_data.get('email'))
@@ -77,8 +77,22 @@ def activate(request, uidb64, token):
 
 @login_required
 def show_profile(request):
-    """Отображает аккаунт пользователя с закладками."""
-    return render(request, 'users/includes/bookmarks.html', {})
+    """Отображает аккаунт пользователя с закладками.
+    В POST принимает и валидирует данные сохраняемого профиля.
+    """
+    response = render(request, 'users/includes/bookmarks.html', {})
+
+    if request.POST:
+        form = ProfileForm(request.POST)
+
+        if form.is_valid():
+            # user.profile.phone =
+            pass
+        else:
+            print('form is NOT valid!!!!')
+            response = render(request, 'users/includes/edit_profile.html', {'form': form})
+
+    return response
 
 
 @login_required

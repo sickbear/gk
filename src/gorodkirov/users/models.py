@@ -6,11 +6,12 @@ from django.dispatch import receiver
 
 
 class Profile(models.Model):
+    """Расширенная модель пользователя."""
     GENDER_CHOICES = (('male', 'мужской'), ('female', 'женский'))
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     avatar = models.ImageField('Аватар', upload_to='avatars', blank=True, null=True)
-    phone = models.CharField('Телефон', max_length=10, blank=True)
+    phone = models.CharField('Телефон', max_length=15, blank=True)
     city = models.CharField('Город', max_length=30, blank=True)
     gender = models.CharField('Пол', max_length=6, choices=GENDER_CHOICES, default='male')
     birthday = models.DateTimeField('День рождения', blank=True, null=True)

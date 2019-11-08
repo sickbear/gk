@@ -1,7 +1,9 @@
 # coding=utf-8
 import random
 from .models import (
-    Rubric, Article, OperationalArticle, CityDetails, ChronicleRubric, ChronicleArticle, TestDriveArticle, PopularTag
+    Rubric, Article, OperationalArticle,
+    CityDetails, ChronicleRubric, ChronicleArticle,
+    TestDriveArticle, PopularTag
 )
 from gorodkirov.cmstemplates.models import NewSettings
 
@@ -184,4 +186,5 @@ def get_test_drive():
 
 
 def get_popular_tags(rubric):
+    """Получает популярные теги рубрики."""
     return PopularTag.objects.filter(rubric=rubric)

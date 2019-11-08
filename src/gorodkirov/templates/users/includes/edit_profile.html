@@ -90,6 +90,7 @@
                     <div>
                         <label class="progect-label" for="tel">Телефон</label>
                         <input class="progect-input" type="tel" id="tel" name="phone" value="{{ phone }}">
+                        <div style="color:red;">{% if form.phone.errors %}{{ form.phone.errors }}{% endif %}</div>
                     </div>
                     <div class="file-wrapper">
                         <input class="file-input" data-photo="one" type="file" id="photo" name="avatar">

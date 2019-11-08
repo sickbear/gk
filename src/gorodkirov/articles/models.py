@@ -1,7 +1,6 @@
 # # coding=utf-8
 import datetime
 from django.db import models
-from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from tinymce import HTMLField
 from mptt.models import MPTTModel, TreeForeignKey
@@ -190,7 +189,8 @@ class Article(models.Model):
 
 class OperationalArticle(models.Model):
     """Оперативная статья."""
-    article = models.ForeignKey(Article, verbose_name='Статья', on_delete=models.CASCADE)
+    article = models.ForeignKey(
+        Article, verbose_name='Статья', related_name='operational_articles', on_delete=models.CASCADE)
     bold = models.BooleanField('Жирный заголовок', default=False)
 
     class Meta:
@@ -214,7 +214,7 @@ class CityDetails(models.Model):
     """Статья для блока Городские подробности."""
     BLOCK_CHOICES = (('1', '1 экран'), ('2', '2 экран'), ('3', '3 экран'),)
 
-    article = models.ForeignKey(Article, verbose_name='Статья', on_delete=models.CASCADE)
+    article = models.ForeignKey(Article, verbose_name='Статья',  related_name='city_details', on_delete=models.CASCADE)
     placement_unit = models.CharField('Место', max_length=1, choices=BLOCK_CHOICES, default=1)
 
     class Meta:
@@ -257,7 +257,8 @@ class ChronicleRubric(models.Model):
 
 class ChronicleArticle(models.Model):
     """Статья хроники."""
-    article = models.ForeignKey(Article, verbose_name='Статья', on_delete=models.CASCADE)
+    article = models.ForeignKey(
+        Article, verbose_name='Статья',  related_name='chronicle_articles', on_delete=models.CASCADE)
     topic = models.ForeignKey(ChronicleRubric, verbose_name='Тема хроники', default=1, on_delete=models.CASCADE)
 
     class Meta:
@@ -271,7 +272,8 @@ class ChronicleArticle(models.Model):
 
 class TestDriveArticle(models.Model):
     """Статья тест-драйва."""
-    article = models.ForeignKey(Article, verbose_name='Статья', on_delete=models.CASCADE)
+    article = models.ForeignKey(
+        Article, verbose_name='Статья', related_name='test_drive_articles',  on_delete=models.CASCADE)
     subtitle = models.CharField('Подзаголовок статьи', max_length=500, db_index=True)
 
     class Meta:
