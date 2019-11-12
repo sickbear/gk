@@ -17,7 +17,7 @@
 				<div class="breadcrumbs">
 					<ul class="breadcrumbs__list">
 						<li class="breadcrumbs__item">
-                            <a href="{% url 'gk_homepage' %}" class="breadcrumbs__link">Главная</a>
+                            <a href="{% url 'homepage' %}" class="breadcrumbs__link">Главная</a>
                         </li>
 						<li class="breadcrumbs__item">
                             <a href="{% url 'forum_categories' %}" class="breadcrumbs__link">Форум</a>
@@ -75,13 +75,13 @@
 								<h3 class="visually-hidden">Комментарий</h3>
 								<div class="comment__wrapper">
 									<div class="comment__image-wrapper">
-                                        {% with thread.user.user.avatar as avatar %}
-                                            {% if avatar %}
+                                        {# with thread.user.profile.avatar as avatar #}
+                                            {# if avatar #}
 										        <img src="{% thumbnail avatar 53x53 crop %}" alt="">
-                                            {% else %}
+                                            {# else #}
                                                 <img src="{% static 'img/default_avatar_middle.jpg' %}" alt="">
-                                            {% endif %}
-                                        {% endwith %}
+                                            {# endif #}
+                                        {# endwith #}
 									</div>
 									<div class="comment__inner-wrapper">
 										<b class="comment__username">{{ thread.author_name }}</b>
@@ -110,13 +110,13 @@
 									<h3 class="visually-hidden">Комментарий</h3>
 									<div class="comment__wrapper">
 										<div class="comment__image-wrapper">
-											{% with post.user.user.avatar as avatar %}
-												{% if avatar %}
+											{# with post.user.profile.avatar as avatar #}
+												{# if avatar #}
 													<img src="{% thumbnail avatar 53x53 crop %}" alt="">
-												{% else %}
+												{# else #}
 													<img src="{% static 'img/default_avatar_middle.jpg' %}" alt="">
-												{% endif %}
-											{% endwith %}
+												{# endif #}
+											{# endwith #}
 										</div>
 										<div class="comment__inner-wrapper">
 											{% if post.user.is_anonymous or post.author_name == "Anonymous user" %}

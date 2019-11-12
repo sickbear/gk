@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends 'base.html' %}
 {% load static %}
 
 {% block toplinks %}
@@ -15,7 +15,7 @@
 				<div class="breadcrumbs">
 					<ul class="breadcrumbs__list">
 						<li class="breadcrumbs__item">
-                            <a href="{% url 'gk_homepage' %}" class="breadcrumbs__link">Главная</a>
+                            <a href="{% url 'homepage' %}" class="breadcrumbs__link">Главная</a>
                         </li>
 						<li class="breadcrumbs__item"><a class="breadcrumbs__link">Форум</a></li>
 					</ul>
@@ -27,7 +27,7 @@
 			<div class="container">
 				<div class="main-greed__left-column mrg-right">
 					<div class="forum-search">
-                        {% include "forum/includes/search_panel.html" %}
+                        {% include 'forum/includes/search_panel.html' %}
 					</div>
 
 					<div class="forum-topic">

@@ -16,7 +16,7 @@ def profile(request):
             'avatar': profile.avatar,
             'phone': profile.phone,
             'city': profile.city,
-            'gender': profile.gender,
+            'sex': profile.sex,
             'birthday': profile.birthday
         }
     else:

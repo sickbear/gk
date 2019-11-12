@@ -32,6 +32,7 @@ INSTALLED_APPS = [
 
     'gorodkirov.users',
     'gorodkirov.articles',
+    'gorodkirov.forum',
     'gorodkirov.cmstemplates',
 ]
 

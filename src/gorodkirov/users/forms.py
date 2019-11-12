@@ -17,14 +17,19 @@ class SignupForm(UserCreationForm):
 
 
 class ProfileForm(forms.Form):
-    phone = forms.CharField(max_length=15)
+    first_name = forms.CharField(max_length=30)
+    last_name = forms.CharField(max_length=150)
+    email = forms.CharField()
+    phone = forms.CharField(max_length=15, required=False)
+    city = forms.CharField(max_length=30)
+    sex = forms.CharField(max_length=6)
+    birthday = forms.DateTimeField(required=False)
 
-    def __init__(self, *args, **kwargs):
-        super(ProfileForm, self).__init__(*args, **kwargs)
-        self.fields['phone'].error_messages = {'required': 'Неверно введён номер телефона.'}
 
-    def clean_phone(self):
-        phone = self.cleaned_data.get('phone')
-        if phone is None:
-            raise forms.ValidationError()
-        return phone
+
+
+
+
+
+
+

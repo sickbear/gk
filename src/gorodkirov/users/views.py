@@ -3,12 +3,14 @@ import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.contrib.sites.shortcuts import get_current_site
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_text
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.contrib.auth import update_session_auth_hash
 from django.core.mail import send_mail
 from django.conf import settings
 from django.template import loader
@@ -78,18 +80,29 @@ def activate(request, uidb64, token):
 @login_required
 def show_profile(request):
     """Отображает аккаунт пользователя с закладками.
-    В POST принимает и валидирует данные сохраняемого профиля.
+    Принимает и валидирует данные сохраняемого профиля.
     """
     response = render(request, 'users/includes/bookmarks.html', {})
 
     if request.POST:
         form = ProfileForm(request.POST)
+        avatar = None
+        if request.FILES:
+            avatar = request.FILES.get('avatar')
 
         if form.is_valid():
-            # user.profile.phone =
-            pass
+            user = request.user
+            user.first_name = form.cleaned_data.get('first_name')
+            user.last_name = form.cleaned_data.get('last_name')
+            user.email = form.cleaned_data.get('email')
+            user.profile.phone = form.cleaned_data.get('phone')
+            user.profile.city = form.cleaned_data.get('city')
+            user.profile.sex = form.cleaned_data.get('sex')
+            user.profile.birthday = form.cleaned_data.get('birthday')
+            if avatar:
+                user.profile.avatar = avatar
+            user.save()
         else:
-            print('form is NOT valid!!!!')
             response = render(request, 'users/includes/edit_profile.html', {'form': form})
 
     return response
@@ -105,3 +118,23 @@ def show_read(request):
 def edit_profile(request):
     """Отображает страницу редактирования профиля."""
     return render(request, 'users/includes/edit_profile.html', {})
+
+
+@login_required
+def password_change(request):
+    """Принимает и сохраняет новый пароль."""
+    response = redirect('show_profile')
+
+    if request.POST:
+        post_dict = request.POST.copy()
+        post_dict['new_password2'] = post_dict['new_password1']
+        form = PasswordChangeForm(request.user, post_dict)
+
+        if form.is_valid():
+            user = form.save(commit=True)
+            update_session_auth_hash(request, user)
+        else:
+            response = render(request, 'users/includes/edit_profile.html', {'form': form})
+
+    return response
+

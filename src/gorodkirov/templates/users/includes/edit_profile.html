@@ -25,6 +25,9 @@
                                value="{{ first_name }}"
                                name="first_name"
                                required="">
+                        <div style="color:red;">
+                            {% if form.first_name.errors %}{{ form.first_name.errors }}{% endif %}
+                        </div>
                     </div>
                     <div>
                         <label class="progect-label" for="surname">Фамилия<sup>*</sup></label>
@@ -34,15 +37,18 @@
                                value="{{ last_name }}"
                                name="last_name"
                                required="">
+                        <div style="color:red;">
+                            {% if form.last_name.errors %}{{ form.last_name.errors }}{% endif %}
+                        </div>
                     </div>
                     <div>
                         <label class="progect-label" for="city">Город<sup>*</sup></label>
                         <div class="select-wrapper">
                             <select class="progect-select" id="city" name="city" required="">
-                                <option value="0">Выбрать город</option>
-                                <option value="1" {% if city == 'Киров' %}selected{% endif %}>Киров</option>
+                                <option value="Киров" {% if city == 'Киров' %}selected{% endif %}>Киров</option>
                             </select>
                         </div>
+                        <div style="color:red;">{% if form.city.errors %}{{ form.city.errors }}{% endif %}</div>
                     </div>
                     <div>
                         <span class="progect-label">Пол<sup>*</sup></span>
@@ -53,8 +59,7 @@
                                        value="male"
                                        name="sex"
                                        id="male"
-                                       required=""
-                                       {% if gender == 'male' %}checked=''{% endif %}>
+                                       {% if sex == 'male' %}checked=''{% endif %}>
                                 <label class="radio-label radio-label--left" for="male" tabindex="0">Мужской</label>
                             </div>
                             <div>
@@ -63,10 +68,11 @@
                                        value="female"
                                        name="sex"
                                        id="female"
-                                       {% if gender == 'female' %}checked=''{% endif %}>
+                                       {% if sex == 'female' %}checked=''{% endif %}>
                                 <label class="radio-label radio-label--right" for="female" tabindex="0">Женский</label>
                             </div>
                         </div>
+                        <div style="color:red;">{% if form.sex.errors %}{{ form.sex.errors }}{% endif %}</div>
                     </div>
                     <div>
                         <label class="progect-label" for="date">Дата рождения</label>
@@ -75,6 +81,7 @@
                                id="date"
                                name="birthday"
                                value="{{ birthday|date:'Y-m-d' }}">
+                        <div style="color:red;">{% if form.birthday.errors %}{{ form.birthday.errors }}{% endif %}</div>
                     </div>
                 </div>
                 <div class="form__right-column">
@@ -86,6 +93,7 @@
                                value="{{ email }}"
                                name="email"
                                required="">
+                        <div style="color:red;">{% if form.email.errors %}{{ form.email.errors }}{% endif %}</div>
                     </div>
                     <div>
                         <label class="progect-label" for="tel">Телефон</label>
@@ -104,7 +112,7 @@
         </section>
     </form>
 
-    <form class="form" action="{% url 'edit_profile' %}" method="POST">
+    <form class="form" action="{% url 'password_change' %}" method="POST">
         {% csrf_token %}
         <section class="form__wrapper">
             <h2 class="title--dark">Смена пароля</h2>
@@ -113,7 +121,7 @@
                     <div class="field-wrapper">
                         <label class="progect-label" for="oldpassword">Старый пароль<sup>*</sup></label>
                         <input class="progect-input progect-input--password"
-                               type="password" id="oldpassword" name="password" required="">
+                               type="password" id="oldpassword" name="old_password" required="">
                         <button type="button" class="modal__password-btn">
                             <span class="visually-hidden">Показать пароль</span>
                         </button>
@@ -123,13 +131,16 @@
                     <div class="field-wrapper">
                         <label class="progect-label" for="newpassword">Новый пароль<sup>*</sup></label>
                         <input class="progect-input progect-input--password"
-                               type="password" id="newpassword" required="">
+                               type="password" id="newpassword" name="new_password1" required="">
                         <button type="button" class="modal__password-btn">
                             <span class="visually-hidden">Показать пароль</span>
                         </button>
                     </div>
                 </div>
             </div>
+            <div style="color:red;">{% if form.old_password.errors %}{{ form.old_password.errors }}{% endif %}</div>
+            <div style="color:red;">{% if form.new_password1.errors %}{{ form.new_password1.errors }}{% endif %}</div>
+            <div style="color:red;">{% if form.new_password2.errors %}{{ form.new_password2.errors }}{% endif %}</div>
             <button class="button button--dark profile-form--dark mrg-bottom" type="submit">Сохранить</button>
         </section>
     </form>
