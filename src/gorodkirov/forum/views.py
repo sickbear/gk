@@ -4,6 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
 from django.http import HttpResponseForbidden, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
 from django.urls import reverse
+from django.db.models import Q
 from .models import Category, Section, Thread, Post
 from .forms import PostForm, ThreadPageForm, ThreadForm
 
@@ -67,18 +68,6 @@ def thread(request, category_id, section_id, pk):  # used
 
 def new_thread(request, section_id):  # used
     """Создаёт новую тему."""
-    path = request.build_absolute_uri()
-    # login_url = settings.LOGIN_URL
-    # register_url = reverse('registration_register')
-    # if not request.user.is_authenticated():
-    #     messages.warning(request, ('Чтобы создать тему, необходимо '
-    #                                '<a href="%s">войти</a> или '
-    #                                '<a href="%s">зарегистрироваться</a>.') %
-    #                      (login_url, register_url))
-    #     return redirect_to_login(path, login_url, REDIRECT_FIELD_NAME)
-
-    form = ThreadForm(None)
-
     if request.POST:
         form = ThreadForm(request.POST, request.FILES)
         print(form)
@@ -89,13 +78,6 @@ def new_thread(request, section_id):  # used
             thread.user = request.user
             thread.save()
             return redirect(thread)
-
-    section = Section.objects.get(id=section_id)
-    return render(request, 'forum/new_thread.html', {
-        'form': form,
-        'section_id': section_id,
-        'section': section
-    })
 
 
 def new_thread_page(request):  # used
@@ -170,8 +152,34 @@ def delete_multiple_posts(request):
     pass
 
 
-def quick_search(request):
-    pass
+def quick_search(request):  # used
+    """Поиск по форуму."""
+    query = request.GET.get('q')
+    if query:
+        terms = query.split()
+
+        thread_qs = Q()
+        post_qs = Q()
+        for term in terms:
+            thread_qs |= Q(name__icontains=term) | Q(text__icontains=term)
+            post_qs |= Q(text__icontains=term)
+
+        threads = ((Thread.objects.filter(thread_qs) | Thread.objects.filter(post_qs)).order_by('-last_updated'))
+
+        # paginator = Paginator(results, 20)
+        # page = request.GET.get('page')
+        # try:
+        #     results = paginator.page(page)
+        # except PageNotAnInteger:
+        #     results = paginator.page(1)
+        # except EmptyPage:
+        #     results = paginator.page(paginator.num_pages)
+    else:
+        threads = []
+    return render(request, 'forum/search.html', {
+        'query': query,
+        'threads': threads
+    })
 
 
 def category_info(request):  # used

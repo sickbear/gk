@@ -64,7 +64,7 @@
                                         <td class="forum-table__category-td">
                                             <h3><a href="{{ thread.get_absolute_url }}">{{ thread.name }}</a></h3>
                                         </td>
-                                        <td class="forum-table__author-td">{# thread.author_name #}</td>
+                                        <td class="forum-table__author-td">{{ thread.author_name }}</td>
                                         <td class="forum-table__comments-td">
                                             <a href="{{ thread.get_absolute_url }}">{{ thread.posts_count }}</a>
                                         </td>
@@ -117,4 +117,5 @@
     <script src="{% static 'scripts/fancybox/jquery.fancybox.min.js' %}"></script>
     <script src="{% static 'scripts/main-header.js' %}"></script>
     <script src="{% static 'scripts/script.js' %}"></script>
+	<script src="{% static 'scripts/script2.js' %}"></script>
 {% endblock %}

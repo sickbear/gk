@@ -38,14 +38,34 @@ $(document).ready(function () {
                     }
                 }
             },
-            error: function(errorData) {
+            error: function() {
                 $('.registration_form_errors').empty().append('<p>Нет ответа от сервера, попробуйте позже.</p>');
             }
         });
 
     });
 
-    // маска для телефона
-    $('input[name=phone]').mask('+7(999)999-9999');
+    // поиск по сайту
+    $('#search_form').on('submit', function(e) {
+        e.preventDefault();
+        var thisForm = $(this);
+        var actionEndpoint = thisForm.attr('action');
+        var httpMethod = thisForm.attr('method');
+        var formData = thisForm.serialize();
+        var searchResult = $('.search-block__list');
+
+        $.ajax({
+            url: actionEndpoint,
+            method: httpMethod,
+            data: formData,
+            dataType: 'html',
+            success: function(data) {
+                searchResult.html(data)
+            },
+            error: function() {
+                searchResult.html('<p style="color:#fff;">Нет ответа от сервера, попробуйте позже.</p>');
+            }
+        });
+    });
 
 });

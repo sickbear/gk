@@ -1,0 +1,13 @@
+{% for article in articles %}
+    <li class="search-block__item">
+        <a class="tag tag--white" href="#">
+            {{ article.rubric.name }}
+        </a>
+        <a href="{% url 'content_show_article' article.slug %}">
+            <p class="search-block__text">{{ article.title }}</p>
+        </a>
+        <time class="search-block__time" datetime="{{ article.date|date:'d-m-y H:i' }}">
+            {{ article.date|date:'d.m.y, H:i' }}
+        </time>
+    </li>
+{% endfor %}

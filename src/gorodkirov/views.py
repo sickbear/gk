@@ -1,7 +1,14 @@
 # coding=utf-8
+import json
+from datetime import date, datetime
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.template.loader import render_to_string
+from django.template import loader
+from django.db.models import Q
 from gorodkirov.users.forms import SignupForm
 from gorodkirov.articles import queries as articles_queries
+from gorodkirov.articles.models import Article
 
 
 def homepage(request):
@@ -31,3 +38,20 @@ def homepage(request):
         'big_block_3': big_block_3,
         'inner': inner,
     })
+
+
+def search(request):
+    """Поиск по сайту."""
+    if request.is_ajax:
+        query = request.GET.get('q')
+        if not query:
+            return HttpResponse(json.dumps({'count': 0, 'results': []}), content_type='application/json; charset=UTF-8')
+
+        articles = Article.objects.filter(active=True)
+        terms = query.split()
+        for term in terms:
+            articles = articles.filter(Q(title__icontains=term)).order_by('-date_sort')
+        articles = articles[:50]
+
+        html = render_to_string('modals/includes/search_result.html', {'articles': articles})
+        return HttpResponse(html)

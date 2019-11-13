@@ -34,20 +34,7 @@
 			<div class="container">
 				<div class="main-greed__left-column mrg-right">
 					<div class="forum-search">
-						<h1 class="title--red mrg-vertical">Форум</h1>
-						<form action="#">
-							<div class="forum-search__wrapper">
-								<div class="forum-search__left">
-									<input type="search" class="forum-search__input" placeholder="Поиск по форуму">
-									<button class="forum-search__button">
-										<span class="visually-hidden">Найти</span>
-									</button>
-								</div>
-								<div class="forum-search__right">
-									<a href="forum5.html" class="button button--dark">+ Создать тему</a>
-								</div>
-							</div>
-						</form>
+                        {% include 'forum/includes/search_panel.html' %}
 					</div>
 
 					<div class="forum">
@@ -95,8 +82,8 @@
 								<div class="comment__text">{{ thread.text|striptags|linebreaksbr }}</div>
 								<div>
 									{% for image in thread.images %}
-										<a href="{{ image.url }}" class="fancyimages" rel="galer">
-											<img src="{{ image.url }}" width="80" height="80" alt="">
+										<a href="{{ image.url }}" data-fancybox="images">
+											<img src="{% thumbnail image 80x80 crop %}" alt="" />
 										</a>
 									{% endfor %}
 								</div>
@@ -128,8 +115,8 @@
 									<div class="comment__text">
 										<p>{{ post.text|striptags|linebreaksbr }}</p>
 										{% for image in post.images %}
-											<a target="_blank" href="{{ image.url }}" class="fancyimages" rel="galer">
-												<img src="{% thumbnail image 80x80 crop %}" width="80" height="80" />
+											<a href="{{ image.url }}" data-fancybox="images">
+												<img src="{% thumbnail image 80x80 crop %}" alt="" />
 											</a>
 										{% endfor %}
 									</div>
@@ -199,8 +186,7 @@
 							<form action="">
 								<div class="add-comment__textarea-wrapper">
 									<textarea class="progect-textarea progect-textarea--add-comment add-smile"
-											  placeholder="Напишите ваш текст">
-									</textarea>
+											  placeholder="Напишите ваш текст"></textarea>
 								</div>
 								<div class="add-comment__wrapper">
 									<!--                  <span class="add-comment__text">Авторизуйтесь, чтобы отправлять коментарии</span>-->
@@ -257,4 +243,5 @@
     <script src="{% static 'scripts/main-header.js' %}"></script>
     <script src="{% static 'scripts/upload.js' %}"></script>
     <script src="{% static 'scripts/script.js' %}"></script>
+	<script src="{% static 'scripts/script2.js' %}"></script>
 {% endblock %}

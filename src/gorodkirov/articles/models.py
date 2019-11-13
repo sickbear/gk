@@ -137,8 +137,8 @@ class Article(models.Model):
     twitter_exported = models.BooleanField(default=False, editable=False, db_index=True)
 
     class Meta:
-        verbose_name = u'Статья'
-        verbose_name_plural = u'Статьи'
+        verbose_name = 'Статья'
+        verbose_name_plural = 'Статьи'
         get_latest_by = "date_created"
         ordering = ['-date_sort']
         permissions = (('can_preview', 'Разрешен предпросмотр статей'),)

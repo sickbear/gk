@@ -25,6 +25,7 @@ urlpatterns = [
     path('news/', article_views.timeline, name='timeline'),
     path('tags/', article_views.articles_by_tags, name='articles_by_tags'),
     path('forum/', include('gorodkirov.forum.urls')),
+    path('search/', views.search, name='search'),
 
     path('accounts/', include('allauth.urls')),
     path('tinymce/', include('tinymce.urls')),

@@ -1,11 +1,11 @@
 {% load forum_tags %}
 
 <h1 class="title--red mrg-vertical">Форум</h1>
-<form action="#">
+<form action="{% url 'forum_quick_search' %}">
     <div class="forum-search__wrapper">
         <div class="forum-search__left">
-            <input type="search" class="forum-search__input" placeholder="Поиск по форуму">
-            <button class="forum-search__button"><span class="visually-hidden">Найти</span></button>
+            <input type="search" class="forum-search__input" name="q" placeholder="Поиск по форуму">
+            <button class="forum-search__button" type="submit"><span class="visually-hidden">Найти</span></button>
         </div>
         <div class="forum-search__right">
             <a href="{% url 'forum_new_thread_page' %}" class="button button--dark">+ Создать тему</a>
