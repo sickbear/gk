@@ -39,7 +39,9 @@
 							<div class="forum-search__wrapper">
 								<div class="forum-search__left">
 									<input type="search" class="forum-search__input" placeholder="Поиск по форуму">
-									<button class="forum-search__button"><span class="visually-hidden">Найти</span></button>
+									<button class="forum-search__button">
+										<span class="visually-hidden">Найти</span>
+									</button>
 								</div>
 								<div class="forum-search__right">
 									<a href="forum5.html" class="button button--dark">+ Создать тему</a>
@@ -75,13 +77,13 @@
 								<h3 class="visually-hidden">Комментарий</h3>
 								<div class="comment__wrapper">
 									<div class="comment__image-wrapper">
-                                        {# with thread.user.profile.avatar as avatar #}
-                                            {# if avatar #}
-										        <img src="{% thumbnail avatar 53x53 crop %}" alt="">
-                                            {# else #}
+                                        {% with thread.user.profile.avatar as author_avatar %}
+                                            {% if author_avatar %}
+										        <img src="{% thumbnail author_avatar 53x53 crop %}" alt="">
+                                            {% else %}
                                                 <img src="{% static 'img/default_avatar_middle.jpg' %}" alt="">
-                                            {# endif #}
-                                        {# endwith #}
+                                            {% endif %}
+                                        {% endwith %}
 									</div>
 									<div class="comment__inner-wrapper">
 										<b class="comment__username">{{ thread.author_name }}</b>
@@ -90,9 +92,7 @@
                                         </time>
 									</div>
 								</div>
-								<div class="comment__text">
-                                    {{ thread.text|striptags|linebreaksbr }}
-								</div>
+								<div class="comment__text">{{ thread.text|striptags|linebreaksbr }}</div>
 								<div>
 									{% for image in thread.images %}
 										<a href="{{ image.url }}" class="fancyimages" rel="galer">
@@ -105,25 +105,21 @@
                             {# Ответы #}
 							<h2 class="comments__title">Комментарии:</h2>
 
-							{% for post in posts %}
+							{% for post in posts|slice:":100" %}
 								<article class="comment" id="post-{{ post.id }}">
 									<h3 class="visually-hidden">Комментарий</h3>
 									<div class="comment__wrapper">
 										<div class="comment__image-wrapper">
-											{# with post.user.profile.avatar as avatar #}
-												{# if avatar #}
-													<img src="{% thumbnail avatar 53x53 crop %}" alt="">
-												{# else #}
+											{% with post.user.profile.avatar as author_avatar %}
+												{% if author_avatar %}
+													<img src="{% thumbnail author_avatar 53x53 crop %}" alt="">
+												{% else %}
 													<img src="{% static 'img/default_avatar_middle.jpg' %}" alt="">
-												{# endif #}
-											{# endwith #}
+												{% endif %}
+											{% endwith %}
 										</div>
 										<div class="comment__inner-wrapper">
-											{% if post.user.is_anonymous or post.author_name == "Anonymous user" %}
-												<b class="comment__username">Anonymous user</b>
-											{% else %}
-												<b class="comment__username">{{ post.author_name }}</b>
-											{% endif %}
+											<b class="comment__username">{{ post.author_name }}</b>
 											<time class="comment__date" datetime="{{ post.date_created|date:'Y-m-d' }}">
 												{{ post.date_created|date:"d.m.Y H:i" }}
 											</time>
@@ -197,18 +193,23 @@
 <!--							</article>-->
 
 						</section>
+
 						<article class="add-comment mrg-bottom-20">
 							<h2 class="add-comment__title">Оставить комментарий</h2>
 							<form action="">
 								<div class="add-comment__textarea-wrapper">
-									<textarea class="progect-textarea progect-textarea--add-comment add-smile" placeholder="Напишите ваш текст"></textarea>
+									<textarea class="progect-textarea progect-textarea--add-comment add-smile"
+											  placeholder="Напишите ваш текст">
+									</textarea>
 								</div>
 								<div class="add-comment__wrapper">
 									<!--                  <span class="add-comment__text">Авторизуйтесь, чтобы отправлять коментарии</span>-->
 									<div class="file-wrapper file-wrapper--comment">
 										<div class="photos"></div>
 										<input class="file-input" data-photo="single" type="file" id="photo">
-										<label class="file-label" for="photo"><span class="file-image file-image--min"></span></label>
+										<label class="file-label" for="photo">
+											<span class="file-image file-image--min"></span>
+										</label>
 									</div>
 									<button class="button button--dark" type="submit">Отправить</button>
 								</div>
@@ -219,10 +220,7 @@
 							<div class="social alert__social">
 								<h3 class="visually-hidden">Мы в социальных сетях</h3>
 								<ul class="social__list">
-									<li class="social__item"><a href="#" class="social__link social__link--vk"><span class="visually-hidden">Вконтакте</span></a></li>
-									<li class="social__item"><a href="#" class="social__link social__link--fb"><span class="visually-hidden">Фейсбук</span></a></li>
-									<li class="social__item"><a href="#" class="social__link social__link--odnk"><span class="visually-hidden">Одноклассники</span></a></li>
-									<li class="social__item"><a href="#" class="social__link social__link--inst"><span class="visually-hidden">Инстаграм</span></a></li>
+									{% include 'includes/social_list.html' %}
 								</ul>
 							</div>
 						</article>
@@ -231,7 +229,7 @@
 				<div class="main-greed__right-column">
 					<div class="bunner-side fixed-block">
 						<a href="#" class="bunner-side__link">
-							<img src="img/banner10.jpg" alt="Реклама на сайте">
+							<img src="{% static 'img/banner10.jpg' %}" alt="Реклама на сайте">
 						</a>
 					</div>
 				</div>
@@ -242,7 +240,7 @@
 						<picture>
 							<source media="(max-width: 767px)" srcset="http://placehold.it/320x120">
 							<source media="(max-width: 1024px)" srcset="http://placehold.it/728x100">
-							<img src="img/banner3.jpg" alt="Реклама">
+							<img src="{% static 'img/banner3.jpg' %}" alt="Реклама">
 						</picture>
 					</a>
 				</div>

@@ -40,7 +40,9 @@
 							<ul class="breadcrumbs__list">
 								<li class="breadcrumbs__item">
                                     <a href="{% url 'forum_sections' category_id=section.category.id %}"
-                                       class="breadcrumbs__link breadcrumbs__link--forum">{{ section.category.name }}</a>
+                                       class="breadcrumbs__link breadcrumbs__link--forum">
+										{{ section.category.name }}
+									</a>
                                 </li>
 								<li class="breadcrumbs__item">
                                     <a class="breadcrumbs__link breadcrumbs__link--forum">{{ section.name }}</a>

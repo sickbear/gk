@@ -1,8 +1,11 @@
 # coding=utf-8
-from django.shortcuts import render, get_object_or_404
+import json
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView
+from django.http import HttpResponseForbidden, HttpResponse, HttpResponseBadRequest, HttpResponseNotFound
+from django.urls import reverse
 from .models import Category, Section, Thread, Post
-from .forms import PostForm
+from .forms import PostForm, ThreadPageForm, ThreadForm
 
 
 class CategoriesListView(ListView):  # used
@@ -16,7 +19,7 @@ class CategoriesListView(ListView):  # used
 def thread(request, category_id, section_id, pk):  # used
     """Показать тред на форуме."""
     thread = get_object_or_404(Thread.objects.select_related('section', 'section__category'), id=pk)
-    posts = thread.posts.all()
+    posts = Post.objects.filter(thread=thread)
 
     # form_class = PostForm if request.user.is_authenticated() else PostCaptchaForm
     # form_class = PostForm
@@ -62,12 +65,43 @@ def thread(request, category_id, section_id, pk):  # used
     })
 
 
-def new_thread(request):
-    pass
+def new_thread(request, section_id):  # used
+    """Создаёт новую тему."""
+    path = request.build_absolute_uri()
+    # login_url = settings.LOGIN_URL
+    # register_url = reverse('registration_register')
+    # if not request.user.is_authenticated():
+    #     messages.warning(request, ('Чтобы создать тему, необходимо '
+    #                                '<a href="%s">войти</a> или '
+    #                                '<a href="%s">зарегистрироваться</a>.') %
+    #                      (login_url, register_url))
+    #     return redirect_to_login(path, login_url, REDIRECT_FIELD_NAME)
+
+    form = ThreadForm(None)
+
+    if request.POST:
+        form = ThreadForm(request.POST, request.FILES)
+        print(form)
+        if form.is_valid():
+            thread = form.save(commit=False)
+            thread.comments_allowed = True
+            thread.section_id = section_id
+            thread.user = request.user
+            thread.save()
+            return redirect(thread)
+
+    section = Section.objects.get(id=section_id)
+    return render(request, 'forum/new_thread.html', {
+        'form': form,
+        'section_id': section_id,
+        'section': section
+    })
 
 
-def new_thread_page(request):
-    pass
+def new_thread_page(request):  # used
+    """Отображает страницу создания темы."""
+    form = ThreadPageForm()
+    return render(request, 'forum/new_thread_page.html', {'form': form})
 
 
 def subscribe_thread(request):
@@ -140,8 +174,21 @@ def quick_search(request):
     pass
 
 
-def category_info(request):
-    pass
+def category_info(request):  # used
+    """Возвращает json-данные с разделами выбранной категории."""
+    cat_id = request.GET.get('id', None)
+
+    if cat_id is None:
+        return HttpResponseBadRequest()
+    try:
+        cat_id = int(cat_id)
+    except ValueError:
+        return HttpResponseBadRequest()
+    sections = list(Section.objects.filter(category_id=cat_id).values('id', 'name'))
+
+    if not sections:
+        return HttpResponseNotFound()
+    return HttpResponse(json.dumps(sections), content_type='application/json; charset=UTF-8')
 
 
 def get_threads_json(request):

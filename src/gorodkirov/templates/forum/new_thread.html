@@ -35,7 +35,7 @@
 					<div class="add-news">
 						<form class="form form--forum"
 							  id="threadform"
-							  action=""
+							  action="{% url 'forum_new_thread' section_id %}"
 							  enctype="multipart/form-data"
 							  method="post">
 							{% csrf_token %}
@@ -44,44 +44,25 @@
 								<div class="form__for-flex">
 									<div class="form__left-column">
 
-										<label class="progect-label" for="category">Категория<sup>*</sup></label>
-										<div>
-											{{ form.category }}
-										</div>
-
-										<label class="progect-label" for="sections">Раздел<sup>*</sup></label>
-										<div>
-											<select id="section" class="progect-input" required=""></select>
-										</div>
-
 										<div>
 											<label class="progect-label" for="avtor">Название<sup>*</sup></label>
-											<input class="progect-input"
-												   type="text"
-												   id="avtor"
-												   name="name"
-												   required="">
+<!--											<input class="progect-input"-->
+<!--                                                   type="text"-->
+<!--                                                   id="avtor"-->
+<!--                                                   required="">-->
+                                            {{ form.name }}
+                                      		{{ form.name.errors }}
 										</div>
 
 										<div>
 											<label class="progect-label">Сообщение<sup>*</sup></label>
-											<textarea class="progect-textarea progect-textarea--message"
-													name="text" required=""></textarea>
+<!--											<textarea class="progect-textarea progect-textarea&#45;&#45;message"-->
+<!--													required=""></textarea>-->
+                                            {{ form.text }}
+											{{ form.text.errors }}
 										</div>
 									</div>
 									<div class="form__right-column form__right-column--flex">
-										<div class="file-wrapper file-wrapper--forum">
-											<input class="file-input"
-												   type="file"
-												   data-photo="three"
-												   id="photo"
-												   name="fileMulti[]"
-												   multiple="">
-											<label class="progect-label file-label" for="photo">
-												<span class="file-image"></span>Загрузите фото
-											</label>
-											<div class="photos"></div>
-										</div>
 										<button class="button button--dark profile-form--dark" type="submit">
 											Отправить
 										</button>
@@ -112,35 +93,4 @@
     <script src="{% static 'scripts/main-header.js' %}"></script>
     <script src="{% static 'scripts/upload.js' %}"></script>
     <script src="{% static 'scripts/script.js' %}"></script>
-
-	<script type="text/javascript">
-	    $(document).ready(function() {
-	    	function update_form_action() {
-			    var form = $('#threadform');
-			    var url = '/forum/newthread/';
-			    var section_id = $('#section option:selected').val();
-			    form.attr('action', url + section_id + '/');
-			};
-
-			$('#category').on('change', function(){
-			    var cat_id = $('#category option:selected').val();
-			    var section = $('#section');
-			    $.get('{% url "category_info" %}', {id: cat_id}, function(data){
-					if (data) {
-						$('#section').empty();
-						for (var i=0; i<data.length; i++) {
-							$('#section').append('<option value="' + data[i].id + '">' + data[i].name + '</option>');
-						}
-						update_form_action();
-					}
-			    });
-			});
-
-			$('#section').on('change', function(){
-			    update_form_action();
-			});
-
-			$('#category :nth-child(3)').prop('selected', true).change();
-	    });
-	</script>
 {% endblock %}

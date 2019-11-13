@@ -5,14 +5,10 @@
     <div class="forum-search__wrapper">
         <div class="forum-search__left">
             <input type="search" class="forum-search__input" placeholder="Поиск по форуму">
-            <button class="forum-search__button">
-                <span class="visually-hidden">Найти</span>
-            </button>
+            <button class="forum-search__button"><span class="visually-hidden">Найти</span></button>
         </div>
         <div class="forum-search__right">
-            <a href="{% url 'forum_new_thread_page' %}" class="button button--dark">
-                + Создать тему
-            </a>
+            <a href="{% url 'forum_new_thread_page' %}" class="button button--dark">+ Создать тему</a>
         </div>
     </div>
 </form>

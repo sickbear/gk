@@ -1,4 +1,5 @@
 # coding=utf-8
+import datetime
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
@@ -190,5 +191,7 @@ class Post(models.Model):
         ] if x]
 
     def author_name(self):
-        """Возвращает имя автора, или имя анонимного комментатора."""
-        return self.user.username
+        """Возвращает имя автора или Anonymous user."""
+        if self.user.id == -1:
+            return 'Anonymous user'
+        return self.user.first_name or self.user.last_name or self.user.username
