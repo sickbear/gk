@@ -1,5 +1,6 @@
 {% load static %}
 {% load thumbnail %}
+{% load articles_tags %}
 
 <section class="top-section-news">
 
@@ -13,11 +14,13 @@
                 </header>
                 <div class="stamp">
                     <div class="stamp__left">
-                        <b class="stamp__item stamp__item--time">Час назад</b>
+                        <b class="stamp__item stamp__item--time">{% calculate_article_time main_news.0.date_sort %}</b>
                         <b class="stamp__item stamp__item--views">256</b>
                     </div>
                     <div class="stamp__right">
-                        <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                        <span class="stamp__item stamp__item--reading">
+                            {% calculate_reading_time main_news.0.text|cut:"&nbsp;"|striptags %}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -41,11 +44,13 @@
                 </header>
                 <div class="stamp">
                     <div class="stamp__left">
-                        <b class="stamp__item stamp__item--time">Час назад</b>
+                        <b class="stamp__item stamp__item--time">{% calculate_article_time main_news.1.date_sort %}</b>
                         <b class="stamp__item stamp__item--views">256</b>
                     </div>
                     <div class="stamp__right">
-                        <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                        <span class="stamp__item stamp__item--reading">
+                            {% calculate_reading_time main_news.1.text|cut:"&nbsp;"|striptags %}
+                        </span>
                     </div>
                 </div>
             </div>
@@ -71,11 +76,15 @@
                     </header>
                     <div class="stamp">
                         <div class="stamp__left">
-                            <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                            <b class="stamp__item stamp__item--time stamp__item--time--grey">
+                                {% calculate_article_time main_news.2.date_sort %}
+                            </b>
                             <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
                         </div>
                         <div class="stamp__right">
-                            <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                            <span class="stamp__item stamp__item--reading">
+                                {% calculate_reading_time main_news.2.text|cut:"&nbsp;"|striptags %}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -102,11 +111,15 @@
                     </header>
                     <div class="stamp">
                         <div class="stamp__left">
-                            <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                            <b class="stamp__item stamp__item--time stamp__item--time--grey">
+                                {% calculate_article_time main_news.3.date_sort %}
+                            </b>
                             <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
                         </div>
                         <div class="stamp__right">
-                            <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                            <span class="stamp__item stamp__item--reading">
+                                {% calculate_reading_time main_news.3.text|cut:"&nbsp;"|striptags %}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -133,11 +146,15 @@
                     </header>
                     <div class="stamp">
                         <div class="stamp__left">
-                            <b class="stamp__item stamp__item--time stamp__item--time--grey">Час назад</b>
+                            <b class="stamp__item stamp__item--time stamp__item--time--grey">
+                                {% calculate_article_time main_news.4.date_sort %}
+                            </b>
                             <b class="stamp__item stamp__item--views stamp__item--views--grey">256</b>
                         </div>
                         <div class="stamp__right">
-                            <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                            <span class="stamp__item stamp__item--reading">
+                                {% calculate_reading_time main_news.4.text|cut:"&nbsp;"|striptags %}
+                            </span>
                         </div>
                     </div>
                 </div>

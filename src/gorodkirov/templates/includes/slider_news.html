@@ -4,7 +4,6 @@
 
 <div class="rubric is-js-rubric-slider hide {% if inner %}rubric--inner{% endif %}">
     {% for rubric in chronicle_rubrics|slice:":3" %}
-        {% now 'd-m-y' as today %}
         {% show_chronicle_artciles rubric as chronicle_artciles %}
         {% if chronicle_artciles %}
             <article class="rubric-item {% if inner %}rubric-item--inner{% endif %}"
@@ -39,11 +38,7 @@
                                            class="rubric-news__link">
                                             <time class="rubric-news__time"
                                                   datetime="{{ article.date_created|date:'d-m-y H:i' }}">
-                                                {% if today == article.date_created|date:'d-m-y' %}
-                                                    Сегодня, {{ article.date_created|date:'H:i' }}
-                                                {% else %}
-                                                    {{ article.date_created|date:'d.m.y, H:i' }}
-                                                {% endif %}
+                                                {% calculate_article_time article.date_sort %}
                                             </time>
                                             <h3 class="rubric-news__title">{{ article.title }}</h3>
                                         </a>

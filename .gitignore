@@ -107,11 +107,9 @@ celerybeat-schedule.db
 .DS_Store
 .pytest_cache/
 diff-quality.html
-coverage.xml
 diff-cover.html
 shared/
 node_modules/
-.idea/
 yagodmarket/local_settings.py
 *.sql
 celerybeat.pid

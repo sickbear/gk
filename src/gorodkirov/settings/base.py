@@ -1,5 +1,6 @@
 # coding: utf-8
 import os
+import pymorphy2
 
 BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../')
 
@@ -110,6 +111,9 @@ AUTHENTICATION_BACKENDS = (
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 )
+
+# pymorphy2
+MORPH = pymorphy2.MorphAnalyzer()
 
 # tinymce
 TINYMCE_DEFAULT_CONFIG = {

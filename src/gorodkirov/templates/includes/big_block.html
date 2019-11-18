@@ -1,5 +1,6 @@
 {% load static %}
 {% load thumbnail %}
+{% load articles_tags %}
 
 <article class="half-card half-card-news {% if inner %}half-card--inner{% endif %}">
     <a class="half-card-news__link"
@@ -15,11 +16,15 @@
             </header>
             <div class="stamp">
                 <div class="stamp__left">
-                    <b class="stamp__item stamp__item--time">Час назад</b>
+                    <b class="stamp__item stamp__item--time">
+                        {% calculate_article_time big_block.date_sort %}
+                    </b>
                     <b class="stamp__item stamp__item--views">256</b>
                 </div>
                 <div class="stamp__right">
-                    <span class="stamp__item stamp__item--reading">Читать 5 мин</span>
+                    <span class="stamp__item stamp__item--reading">
+                        {% calculate_reading_time big_block.text|cut:"&nbsp;"|striptags %}
+                    </span>
                 </div>
             </div>
         </div>

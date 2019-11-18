@@ -139,7 +139,7 @@ class Article(models.Model):
     class Meta:
         verbose_name = 'Статья'
         verbose_name_plural = 'Статьи'
-        get_latest_by = "date_created"
+        get_latest_by = 'date_created'
         ordering = ['-date_sort']
         permissions = (('can_preview', 'Разрешен предпросмотр статей'),)
         db_table = 'articles_article'

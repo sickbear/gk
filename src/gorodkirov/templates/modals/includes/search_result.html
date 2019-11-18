@@ -1,13 +1,13 @@
 {% for article in articles %}
     <li class="search-block__item">
-        <a class="tag tag--white" href="#">
+        <a class="tag tag--white" href="{% url 'content_show_rubric' article.rubric.slug %}" target="_blank">
             {{ article.rubric.name }}
         </a>
-        <a href="{% url 'content_show_article' article.slug %}">
+        <a href="{% url 'content_show_article' article.slug %}" target="_blank">
             <p class="search-block__text">{{ article.title }}</p>
         </a>
-        <time class="search-block__time" datetime="{{ article.date|date:'d-m-y H:i' }}">
-            {{ article.date|date:'d.m.y, H:i' }}
+        <time class="search-block__time" datetime="{{ article.date_sort|date:'d-m-y H:i' }}">
+            {{ article.date_sort|date:'d.m.y, H:i' }}
         </time>
     </li>
 {% endfor %}
