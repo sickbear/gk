@@ -91,4 +91,4 @@ ujson==1.33
 urwid==1.1.1
 watchdog==0.6.0
 wcwidth==0.1.7
-Werkzeug==0.8.3
+Werkzeug==0.15.3
