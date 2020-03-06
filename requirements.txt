@@ -71,7 +71,7 @@ pytz==2013b0
 PyYAML==3.10
 rcssmin==1.0.6
 redis==2.10.5
-requests==2.0.0
+requests==2.20.0
 requests-oauthlib==0.3.2
 rjsmin==1.1.0
 rq==0.3.7
