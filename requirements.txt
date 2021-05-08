@@ -36,7 +36,7 @@ drest==0.9.12
 easy-thumbnails==2.5
 enum34==1.1.6
 envvars==0.3.0
-eventlet==0.17.4
+eventlet==0.31.0
 feedparser==5.2.1
 # Flask==0.9
 greenlet  # greenlet==0.4.7
